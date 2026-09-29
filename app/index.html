@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Chemin de publication, remplacé par --base-href (ex. /app/). -->
+  <base href="/app/">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--
+    Politique de sécurité (version Web d'Immo) : scripts de l'application et de
+    Cloudflare Turnstile seulement, données vers Supabase uniquement, aucune
+    ressource d'un autre site. 'wasm-unsafe-eval' : moteur de rendu Flutter
+    (CanvasKit, WebAssembly). fonts.gstatic.com : polices de secours (arabe…).
+    Firebase : notifications Web.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'wasm-unsafe-eval' https://challenges.cloudflare.com https://www.gstatic.com;
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: blob: https://*.supabase.co;
+    font-src 'self' data: https://fonts.gstatic.com;
+    connect-src 'self' https://*.supabase.co wss://*.supabase.co https://fonts.gstatic.com https://www.gstatic.com https://challenges.cloudflare.com https://*.googleapis.com;
+    frame-src 'self' blob: https://challenges.cloudflare.com;
+    worker-src 'self' blob:;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="description" content="Immo : loyers, quittances, impayés, rappels, préavis et rapprochement des relevés, sur ordinateur comme sur téléphone.">
+  <meta name="theme-color" content="#0E5A47">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Immo">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <title>Immo</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body { margin: 0; height: 100%; background: #0E5A47; }
+    /* Écran de chargement, retiré par Flutter au premier affichage. */
+    #immo-loading {
+      position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+      color: #e9f5ef; font: 500 15px/1.4 system-ui, "Segoe UI", sans-serif;
+    }
+    #immo-loading img { width: 96px; height: 96px; border-radius: 22px; }
+    #immo-loading span { width: 34px; height: 34px; border: 3px solid rgba(255,255,255,.25); border-top-color: #7BC943; border-radius: 50%; animation: immo-spin .9s linear infinite; }
+    @keyframes immo-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { #immo-loading span { animation: none; } }
+  </style>
+</head>
+<body>
+  <div id="immo-loading" aria-live="polite">
+    <img src="icons/Icon-192.png" alt="Immo">
+    <span role="progressbar" aria-label="Chargement"></span>
+  </div>
+  <noscript>Immo nécessite JavaScript. / Immo requires JavaScript.</noscript>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
