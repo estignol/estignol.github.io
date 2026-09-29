@@ -1,1082 +1,367 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Immo — gestion locative</title>
-<meta name="description" content="Immo : encaissement des loyers, quittances PDF vérifiables, suivi des impayés, rappels, préavis et rapprochement des relevés Mobile Money et bancaires. Gratuit, en 5 langues.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Immo — La gestion locative professionnelle, sur téléphone et ordinateur</title>
+<meta name="description" content="Immo : encaissements Mobile Money, quittances vérifiables, rappels automatiques, suivi des impayés, rapprochement des relevés et rapports signés. Gratuit, en 5 langues, sur téléphone et ordinateur.">
+<meta name="theme-color" content="#062a21">
+<meta property="og:title" content="Immo — La gestion locative professionnelle">
+<meta property="og:description" content="Loyers, quittances, impayés, rappels et rapports signés. Gratuit, sur téléphone et ordinateur.">
+<meta property="og:image" content="assets/img/doc-quittance.webp">
 <link rel="icon" type="image/png" href="assets/immo-64.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Poppins:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Tajawal:wght@400;500;700;800&display=swap">
-<style>
-/* Mise en page : un « registre vivant ». L'accueil montre l'application au travail
-   (tableau de bord + quittance vérifiable), puis les sections suivent le cycle réel
-   d'un loyer : encaisser, relancer, rapprocher, documenter, sécuriser. */
-:root {
-  --ink: #0f2620;          /* texte principal, vert très sombre */
-  --muted: #53675f;        /* texte secondaire */
-  --paper: #f5f8f6;        /* fond, blanc légèrement verdi */
-  --surface: #ffffff;      /* cartes */
-  --line: #dde7e2;         /* filets */
-  --brand: #0e5a47;        /* vert Immo */
-  --brand-2: #17a06b;      /* vert vif */
-  --leaf: #7bc943;         /* trait vert du logo */
-  --window: #f29a1e;       /* orange des fenêtres du logo */
-  --window-ink: #7a4300;
-  --danger: #d64545;
-  --deep: #083a2e;         /* bandeaux sombres */
-  --on-deep: #e9f5ef;
-  --shadow: 0 18px 50px -24px rgba(8, 58, 46, .35);
-  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --body: "Poppins", "Segoe UI", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
-  --arabic: "Tajawal", "Segoe UI", system-ui, sans-serif;
-  --radius: 18px;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ink: #e6f1ec; --muted: #9bb3a9; --paper: #08130f; --surface: #0f1f19; --line: #1e3a30;
-    --brand: #2fbf85; --brand-2: #45d396; --leaf: #8fd65a; --window: #f5a93a; --window-ink: #ffd9a1;
-    --danger: #f07070; --deep: #0c2a21; --on-deep: #e9f5ef; --shadow: 0 18px 50px -24px rgba(0, 0, 0, .7);
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --ink: #e6f1ec; --muted: #9bb3a9; --paper: #08130f; --surface: #0f1f19; --line: #1e3a30;
-  --brand: #2fbf85; --brand-2: #45d396; --leaf: #8fd65a; --window: #f5a93a; --window-ink: #ffd9a1;
-  --danger: #f07070; --deep: #0c2a21; --on-deep: #e9f5ef; --shadow: 0 18px 50px -24px rgba(0, 0, 0, .7);
-  color-scheme: dark;
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0; background: var(--paper); color: var(--ink);
-  font-family: var(--body); font-size: 16px; line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-}
-html[lang="ar"] body { font-family: var(--arabic); font-size: 17px; }
-html[lang="ar"] .display, html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3 { font-family: var(--arabic); letter-spacing: 0; }
-img { max-width: 100%; display: block; }
-a { color: inherit; }
-:focus-visible { outline: 3px solid var(--brand-2); outline-offset: 3px; border-radius: 6px; }
-.wrap { width: 100%; max-width: 1160px; margin-inline: auto; padding-inline: 20px; }
-h1, h2, h3 { font-family: var(--display); line-height: 1.08; text-wrap: balance; margin: 0; }
-h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 800; letter-spacing: -.02em; }
-h3 { font-size: 1.15rem; font-weight: 600; letter-spacing: -.01em; }
-p { margin: 0; }
-.eyebrow { font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
-html[lang="ar"] .eyebrow { letter-spacing: 0; }
-.lead { color: var(--muted); font-size: 1.08rem; max-width: 60ch; }
-.section { padding-block: clamp(64px, 9vw, 110px); scroll-margin-top: 72px; }
-.section-head { display: grid; gap: 14px; max-width: 760px; margin-bottom: 44px; }
-
-/* Boutons */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 52px; padding: 0 24px; border-radius: 999px; border: 0; cursor: pointer;
-  font: 600 1rem/1 var(--body); text-decoration: none; transition: transform .15s ease, box-shadow .15s ease, background .15s;
-}
-html[lang="ar"] .btn { font-family: var(--arabic); font-weight: 700; }
-.btn:hover { transform: translateY(-1px); }
-.btn-primary { background: var(--brand); color: #fff; box-shadow: 0 10px 24px -12px var(--brand); }
-.btn-primary:hover { background: var(--brand-2); }
-.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
-.btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
-.btn svg { width: 20px; height: 20px; flex: none; }
-
-/* En-tête */
-.top {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
-}
-.top .wrap { display: flex; align-items: center; gap: 18px; min-height: 68px; }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.35rem/1 var(--display); color: var(--ink); }
-.brand img { width: 36px; height: 36px; border-radius: 10px; }
-.nav { display: flex; gap: 22px; margin-inline-start: auto; }
-.nav a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem; }
-.nav a:hover { color: var(--brand); }
-.nav .nav-login { display: none; }
-.tools { display: flex; align-items: center; gap: 10px; }
-.lang {
-  appearance: none; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink);
-  border-radius: 999px; padding: 8px 32px 8px 14px; font: 500 .9rem var(--body); cursor: pointer;
-  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
-  background-position: calc(100% - 17px) 55%, calc(100% - 12px) 55%; background-size: 5px 5px; background-repeat: no-repeat;
-}
-html[dir="rtl"] .lang { padding: 8px 14px 8px 32px; background-position: 17px 55%, 12px 55%; }
-.top .btn { min-height: 42px; padding: 0 18px; font-size: .92rem; }
-.menu-btn { display: none; background: none; border: 1.5px solid var(--line); border-radius: 12px; width: 44px; height: 42px; color: var(--ink); cursor: pointer; }
-.menu-btn svg { width: 22px; height: 22px; }
-
-/* Accueil */
-.hero { padding-block: clamp(40px, 7vw, 80px) clamp(56px, 8vw, 96px); overflow: hidden; }
-.hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
-.hero h1 { font-size: clamp(2.5rem, 6.2vw, 4.6rem); font-weight: 800; letter-spacing: -.035em; }
-.hero h1 em { font-style: normal; color: var(--brand); position: relative; white-space: nowrap; }
-.hero h1 em::after {
-  content: ""; position: absolute; inset-inline: -2%; bottom: .02em; height: .16em; z-index: -1;
-  background: var(--leaf); border-radius: 999px; opacity: .55; transform: rotate(-1.5deg);
-}
-.hero-copy { display: grid; gap: 22px; min-width: 0; }
-.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
-.proof { display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--muted); font-size: .92rem; }
-.proof span { display: inline-flex; align-items: center; gap: 8px; }
-.proof svg { width: 18px; height: 18px; color: var(--brand-2); flex: none; }
-
-/* Scène : téléphone + quittance */
-.stage { position: relative; min-height: 560px; display: grid; place-items: center; }
-.stage::before {
-  content: ""; position: absolute; width: 88%; aspect-ratio: 1; border-radius: 50%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--leaf) 38%, transparent), transparent 70%);
-}
-.phone {
-  position: relative; width: 290px; max-width: 78%; border-radius: 40px; padding: 12px;
-  background: #0b1714; box-shadow: var(--shadow), inset 0 0 0 2px #22342e; transform: rotate(-3deg);
-}
-.screen { border-radius: 30px; overflow: hidden; background: #f4f7f5; color: #10231d; font-family: var(--body); }
-html[lang="ar"] .screen { font-family: var(--arabic); }
-.app-top { background: linear-gradient(160deg, #0e5a47, #17a06b); color: #fff; padding: 22px 16px 46px; }
-.app-top .hello { font-size: .72rem; opacity: .85; }
-.app-top .who { font: 700 1.05rem/1.2 var(--display); }
-html[lang="ar"] .app-top .who { font-family: var(--arabic); }
-.app-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 12px; margin-top: -32px; }
-.kpi { background: #fff; border-radius: 14px; padding: 10px; box-shadow: 0 6px 16px -10px rgba(0,0,0,.35); }
-.kpi small { display: block; font-size: .6rem; color: #5a6d66; }
-.kpi b { font: 600 .82rem/1.3 var(--mono); }
-.kpi.red b { color: #d64545; }
-.app-list { padding: 12px; display: grid; gap: 7px; }
-.row { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 12px; padding: 8px 10px; font-size: .66rem; }
-.row .dot { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: .56rem; font-weight: 700; color: #fff; flex: none; }
-.row .grow { flex: 1; min-width: 0; line-height: 1.3; }
-.row .grow b { display: block; font-size: .68rem; }
-.row .amt { font: 600 .66rem var(--mono); }
-.chip { display: inline-block; font-size: .56rem; padding: 1px 6px; border-radius: 999px; background: #fff4e0; color: #8a4f00; }
-.toast {
-  position: absolute; inset-inline-end: -6%; top: 64px; width: 240px; max-width: 70%;
-  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 16px;
-  padding: 12px 14px; box-shadow: var(--shadow); display: grid; grid-template-columns: auto 1fr; gap: 4px 10px;
-  transform: rotate(2deg); font-size: .8rem; line-height: 1.35;
-}
-.toast .ic { grid-row: span 2; width: 30px; height: 30px; border-radius: 9px; background: color-mix(in srgb, var(--danger) 16%, transparent); color: var(--danger); display: grid; place-items: center; }
-.toast .ic svg { width: 18px; height: 18px; }
-.toast b { font-weight: 600; }
-.toast span { color: var(--muted); }
-.receipt {
-  position: absolute; inset-inline-start: -4%; bottom: 18px; width: 250px; max-width: 72%;
-  background: var(--surface); color: var(--ink); border-radius: 14px; padding: 16px 16px 14px;
-  box-shadow: var(--shadow); transform: rotate(-6deg); border-top: 5px solid var(--brand);
-}
-.receipt::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 8px;
-  background: radial-gradient(circle at 6px -2px, transparent 6px, var(--surface) 6.5px) 0 0 / 12px 8px repeat-x;
-}
-.receipt .t { font: 800 .8rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--brand); }
-html[lang="ar"] .receipt .t { font-family: var(--arabic); letter-spacing: 0; }
-.receipt .no { font: 500 .68rem var(--mono); color: var(--muted); margin-top: 4px; }
-.receipt .sum { display: flex; align-items: end; justify-content: space-between; gap: 10px; margin-top: 12px; }
-.receipt .sum b { font: 600 1.15rem/1 var(--mono); }
-.receipt .sum small { display: block; font-size: .66rem; color: var(--muted); }
-.receipt canvas { width: 58px; height: 58px; border-radius: 6px; background: #fff; padding: 4px; }
-.stamp {
-  position: absolute; inset-inline-end: 12px; top: 12px; transform: rotate(10deg);
-  border: 2px solid var(--brand-2); color: var(--brand-2); border-radius: 6px; padding: 2px 8px;
-  font: 800 .7rem/1.4 var(--display); letter-spacing: .08em; text-transform: uppercase;
-}
-html[lang="ar"] .stamp { font-family: var(--arabic); letter-spacing: 0; }
-
-/* Moyens de paiement */
-.rails { border-block: 1px solid var(--line); background: var(--surface); }
-.rails .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; padding-block: 22px; }
-.rails p { color: var(--muted); font-size: .92rem; margin-inline-end: 8px; }
-.rails ul { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin: 0; padding: 0; }
-.rails li { font-weight: 600; font-size: .92rem; padding: 7px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); }
-
-/* Fonctionnalités */
-.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.feature { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 12px; align-content: start; }
-.feature .fi { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: color-mix(in srgb, var(--brand-2) 14%, transparent); color: var(--brand); }
-.feature .fi svg { width: 24px; height: 24px; }
-.feature p { color: var(--muted); font-size: .95rem; }
-.feature.wide { grid-column: span 2; background: var(--deep); color: var(--on-deep); border-color: transparent; }
-.feature.wide p { color: color-mix(in srgb, var(--on-deep) 78%, transparent); }
-.feature.wide .fi { background: rgba(255,255,255,.1); color: var(--leaf); }
-.times { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-.times span { font: 600 .9rem var(--mono); padding: 6px 12px; border-radius: 10px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); }
-
-/* Étapes */
-.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; counter-reset: step; list-style: none; margin: 0; padding: 0; }
-.step { position: relative; padding-top: 58px; display: grid; gap: 8px; align-content: start; }
-.step::before {
-  counter-increment: step; content: counter(step); position: absolute; top: 0; inset-inline-start: 0;
-  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
-  font: 800 1.1rem var(--display); color: var(--brand); background: var(--surface); border: 2px solid var(--brand);
-}
-.step::after { content: ""; position: absolute; top: 22px; inset-inline-start: 54px; inset-inline-end: -8px; height: 2px; background: repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 14px); }
-.step:last-child::after { display: none; }
-.step p { color: var(--muted); font-size: .95rem; }
-
-/* Documents */
-.docs { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
-.doc-list { display: grid; gap: 14px; list-style: none; margin: 0; padding: 0; }
-.doc-list li { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; padding: 16px 18px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); }
-.doc-list .tag { grid-row: span 2; align-self: start; font: 600 .72rem var(--mono); padding: 4px 8px; border-radius: 8px; background: color-mix(in srgb, var(--brand-2) 14%, transparent); color: var(--brand); }
-.doc-list .tag.purple { background: color-mix(in srgb, #7c4ddb 16%, transparent); color: #7c4ddb; }
-.doc-list .tag.orange { background: color-mix(in srgb, var(--window) 20%, transparent); color: var(--window-ink); }
-.doc-list b { font-weight: 600; }
-.doc-list span { color: var(--muted); font-size: .92rem; }
-.paper {
-  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px; box-shadow: var(--shadow);
-  display: grid; gap: 16px; min-width: 0;
-}
-.paper-head { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
-.paper-head .t { font: 800 1.35rem/1.1 var(--display); color: var(--brand); }
-html[lang="ar"] .paper-head .t { font-family: var(--arabic); }
-.paper-head .no { font: 500 .8rem var(--mono); color: var(--muted); }
-.paper table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-.paper td { padding: 9px 0; border-bottom: 1px dashed var(--line); }
-.paper td:last-child { text-align: end; font: 500 .9rem var(--mono); }
-.paper tr.total td { border-bottom: 0; font-weight: 700; padding-top: 12px; }
-.paper tr.total td:last-child { font: 600 1.05rem var(--mono); color: var(--brand); }
-.paper-foot { display: flex; align-items: center; gap: 14px; }
-.paper-foot canvas { width: 72px; height: 72px; flex: none; background: #fff; border-radius: 8px; padding: 5px; border: 1px solid var(--line); }
-.paper-foot p { color: var(--muted); font-size: .85rem; }
-.sign { margin-inline-start: auto; text-align: center; font-size: .75rem; color: var(--muted); }
-.sign svg { width: 110px; height: 44px; color: #1f3b8f; display: block; margin-inline: auto; }
-
-/* Sécurité */
-.secure { background: var(--deep); color: var(--on-deep); border-radius: 28px; padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
-.secure .eyebrow { color: var(--leaf); }
-.secure .lead { color: color-mix(in srgb, var(--on-deep) 78%, transparent); }
-.secure ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.secure li { padding: 18px; border-radius: 16px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); display: grid; gap: 6px; }
-.secure li b { font-weight: 600; }
-.secure li span { font-size: .9rem; color: color-mix(in srgb, var(--on-deep) 72%, transparent); }
-
-/* Tarif */
-.price { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
-.price-card { background: var(--surface); border: 2px solid var(--brand); border-radius: 24px; padding: 32px; display: grid; gap: 18px; box-shadow: var(--shadow); }
-.price-card .amount { font: 800 clamp(3rem, 7vw, 4.4rem)/1 var(--display); color: var(--brand); letter-spacing: -.03em; }
-html[lang="ar"] .price-card .amount { font-family: var(--arabic); }
-.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.checks li { display: flex; gap: 10px; align-items: start; }
-.checks svg { width: 20px; height: 20px; color: var(--brand-2); flex: none; margin-top: 3px; }
-
-/* FAQ */
-.faq { display: grid; gap: 12px; max-width: 860px; }
-.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 4px 20px; }
-.faq summary { cursor: pointer; list-style: none; padding: 16px 0; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font: 600 1.3rem/1 var(--mono); color: var(--brand); }
-.faq details[open] summary::after { content: "–"; }
-.faq details p { color: var(--muted); padding-bottom: 18px; }
-
-/* Contact */
-.contact { display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: start; }
-.contact-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 26px; display: grid; gap: 16px; }
-.contact-line { display: grid; gap: 4px; }
-.contact-line small { color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; }
-html[lang="ar"] .contact-line small { letter-spacing: 0; }
-.contact-line .val { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font: 500 1.02rem var(--mono); word-break: break-all; }
-.copy { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 4px 12px; font: 500 .8rem var(--body); cursor: pointer; }
-.copy:hover { border-color: var(--brand); color: var(--brand); }
-
-/* Pied de page */
-.foot { border-top: 1px solid var(--line); padding-block: 36px; color: var(--muted); font-size: .9rem; }
-.foot .wrap { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
-.theme-btn { background: none; border: 1.5px solid var(--line); color: var(--ink); border-radius: 999px; padding: 6px 14px; font: 500 .85rem var(--body); cursor: pointer; }
-
-/* Apparition douce (état de repos visible) */
-@media (prefers-reduced-motion: no-preference) {
-  .phone { animation: float 7s ease-in-out infinite; }
-  .receipt { animation: slide 1s .2s both cubic-bezier(.2,.8,.2,1); }
-  .toast { animation: drop .9s .6s both cubic-bezier(.2,.8,.2,1); }
-  @keyframes float { 50% { transform: rotate(-3deg) translateY(-8px); } }
-  @keyframes slide { from { transform: rotate(-12deg) translateY(30px); } }
-  @keyframes drop { from { transform: rotate(6deg) translateY(-18px); } }
-}
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-/* Tablette */
-@media (max-width: 980px) {
-  .hero .wrap, .docs, .secure, .price, .contact { grid-template-columns: 1fr; }
-  .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 34px; }
-  .step:nth-child(2)::after { display: none; }
-  .stage { min-height: 520px; }
-  .toast { inset-inline-end: 0; }
-  .receipt { inset-inline-start: 0; }
-}
-/* Téléphone */
-@media (max-width: 760px) {
-  .nav { display: none; position: absolute; top: 100%; inset-inline: 0; background: var(--paper); border-bottom: 1px solid var(--line); flex-direction: column; gap: 0; padding: 8px 20px 16px; }
-  .nav.open { display: flex; }
-  .nav a { padding: 12px 0; border-bottom: 1px solid var(--line); }
-  .nav .nav-login { display: block; color: var(--brand); font-weight: 600; border-bottom: 0; }
-  .menu-btn { display: grid; place-items: center; margin-inline-start: auto; }
-  .tools .btn { display: none; }
-  .features, .steps, .secure ul { grid-template-columns: 1fr; }
-  .feature.wide { grid-column: auto; }
-  .step::after { display: none; }
-  .stage { min-height: 500px; }
-  .paper-foot { flex-wrap: wrap; }
-}
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Poppins:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=Tajawal:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="preload" as="image" href="assets/img/app-home.webp">
 </head>
 <body>
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="#top" aria-label="Immo">
-      <img src="assets/immo-192.png" alt="" width="36" height="36">Immo
+<header class="top" id="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#hero" aria-label="Immo">
+      <img src="assets/immo-192.png" alt="" width="38" height="38">
+      <span>Immo</span>
     </a>
-    <nav class="nav" id="nav">
+    <nav class="nav" id="nav" aria-label="Navigation">
       <a href="#fonctionnalites" data-i18n="nav.features">Fonctionnalités</a>
-      <a href="#comment" data-i18n="nav.how">Comment ça marche</a>
+      <a href="#documents" data-i18n="nav.docs">Documents</a>
+      <a href="#demarrer" data-i18n="nav.how">Démarrer</a>
       <a href="#securite" data-i18n="nav.security">Sécurité</a>
       <a href="#tarif" data-i18n="nav.price">Tarif</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
-      <a href="app/" class="js-app nav-login" data-i18n="cta.login">Se connecter</a>
+      <a href="app/" class="js-app nav-mobile-cta" data-i18n="cta.login">Se connecter</a>
     </nav>
     <div class="tools">
-      <label for="lang" class="sr" hidden>Langue</label>
-      <select id="lang" class="lang" aria-label="Langue / Language">
-        <option value="fr">Français</option>
-        <option value="en">English</option>
-        <option value="es">Español</option>
-        <option value="pt">Português</option>
-        <option value="ar">العربية</option>
-      </select>
-      <a class="btn btn-primary js-app" href="app/" data-i18n="cta.login">Se connecter</a>
+      <label class="lang-wrap">
+        <span class="sr">Langue / Language</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <select id="lang" class="lang">
+          <option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option><option value="ar">AR</option>
+        </select>
+      </label>
+      <a class="btn btn-sm btn-light js-app hide-sm" href="app/" data-i18n="cta.login">Se connecter</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
     </div>
-    <button class="menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
   </div>
 </header>
 
-<main id="top">
-  <section class="hero">
-    <div class="wrap">
+<main>
+  <!-- ============ ACCUEIL ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span><span class="grid"></span></div>
+    <div class="wrap hero-row">
       <div class="hero-copy">
-        <span class="eyebrow" data-i18n="hero.eyebrow">Gestion locative pour agences et propriétaires</span>
-        <h1 data-i18n-html="hero.title">Chaque loyer, de l'encaissement <em>à la quittance</em>.</h1>
-        <p class="lead" data-i18n="hero.lead">Immo encaisse, envoie la quittance par WhatsApp, relance les retards trois fois par jour et rapproche vos relevés Mobile Money. Sur votre téléphone comme sur votre ordinateur, dans votre langue et votre monnaie.</p>
-        <div class="cta-row" id="telecharger">
-          <a class="btn btn-primary js-app" href="app/">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
-            <span data-i18n="cta.web">Ouvrir Immo sur ordinateur</span>
-          </a>
-          <a class="btn btn-ghost js-download" href="#contact">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
-            <span data-i18n="cta.android">Télécharger pour Android</span>
-          </a>
-          <a class="btn btn-ghost js-demo" href="#contact">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg>
-            <span data-i18n="cta.demo">Demander une démonstration</span>
-          </a>
+        <a class="badge js-app" href="app/" data-reveal><span class="dot"></span><span data-i18n="hero.badge">Nouveau : Immo fonctionne aussi sur ordinateur</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+        <h1 data-i18n-html="hero.title" data-reveal style="--d:80ms">Gérez vos loyers <span class="grad">comme une grande agence</span>.</h1>
+        <p class="lead" data-i18n="hero.lead" data-reveal style="--d:160ms">Encaissements Mobile Money, quittances vérifiables, rappels automatiques, rapprochement des relevés et rapports signés. Sur téléphone et sur ordinateur, dans votre langue et votre monnaie.</p>
+        <div class="cta-row" data-reveal style="--d:240ms">
+          <a class="btn btn-primary btn-lg js-app" href="app/"><span data-i18n="cta.start">Commencer gratuitement</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn btn-glass btn-lg js-demo" href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="cta.demo">Demander une démonstration</span></a>
         </div>
-        <div class="proof">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><b data-i18n="proof.free">Gratuit</b></span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><span data-i18n="proof.langs">5 langues, toutes les monnaies</span></span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><span data-i18n="proof.offline">Fonctionne hors connexion</span></span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><span data-i18n="proof.sync">Téléphone et ordinateur, mêmes données</span></span>
-        </div>
+        <p class="hero-note" data-i18n="hero.note" data-reveal style="--d:320ms">Gratuit · Sans carte bancaire · Prêt en 5 minutes</p>
+        <a class="android-link js-download" href="#contact" data-reveal style="--d:360ms">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10h10v7a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-7ZM8 10a4 4 0 0 1 8 0M9 5 8 3.5M15 5l1-1.5M4 11v4M20 11v4"/></svg>
+          <span data-i18n="cta.android">Télécharger pour Android</span>
+        </a>
       </div>
 
-      <div class="stage" aria-hidden="true">
-        <div class="phone">
-          <div class="screen">
-            <div class="app-top">
-              <div class="hello" data-i18n="mock.hello">Bonjour,</div>
-              <div class="who">Agence du Littoral</div>
-            </div>
-            <div class="app-cards">
-              <div class="kpi"><small data-i18n="mock.collected">Encaissé ce mois</small><b>1 245 000</b></div>
-              <div class="kpi red"><small data-i18n="mock.late">Impayés</small><b>320 000</b></div>
-            </div>
-            <div class="app-list">
-              <div class="row"><span class="dot" style="background:#17a06b">AR</span><span class="grow"><b>Assyla R. André</b><span class="chip">MTN MoMo</span></span><span class="amt">+10 200</span></div>
-              <div class="row"><span class="dot" style="background:#0e5a47">MS</span><span class="grow"><b>Muankume S. Frank</b><span class="chip">Orange Money</span></span><span class="amt">+20 000</span></div>
-              <div class="row"><span class="dot" style="background:#f29a1e">KF</span><span class="grow"><b>Kameni François</b><span class="chip" data-i18n="mock.cash">Espèces</span></span><span class="amt">+60 000</span></div>
-              <div class="row"><span class="dot" style="background:#7c4ddb">ED</span><span class="grow"><b>Ekani Irène</b><span class="chip" data-i18n="mock.transfer">Virement</span></span><span class="amt">+150 000</span></div>
-            </div>
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="stage-inner">
+          <div class="doc-float" data-depth="0.6"><img src="assets/img/doc-quittance.webp" alt="" width="1200" height="1697"></div>
+          <div class="phone" data-depth="1">
+            <div class="phone-notch"></div>
+            <div class="phone-screen"><img src="assets/img/app-home.webp" alt="" width="1179" height="3996"></div>
+          </div>
+          <div class="chip chip-paid" data-depth="1.6">
+            <span class="chip-ic ok"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span>
+            <span><b data-i18n="float.paid">Paiement reçu</b><small data-i18n="float.paidSub">Orange Money · Studio S1</small></span>
+            <strong class="mono">+75 000</strong>
+          </div>
+          <div class="chip chip-alert" data-depth="1.3">
+            <span class="chip-ic warn"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+            <span><b data-i18n="float.alert">3 loyers en retard</b><small data-i18n="float.alertSub">Relance WhatsApp en un appui</small></span>
+          </div>
+          <div class="chip chip-doc" data-depth="1.9">
+            <span class="chip-ic doc"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+            <span><b data-i18n="float.doc">Quittance envoyée</b><small data-i18n="float.docSub">Signée, avec QR code de vérification</small></span>
           </div>
         </div>
-        <div class="toast">
-          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
-          <b data-i18n="mock.toastTitle">Retards de paiement (3)</b>
-          <span data-i18n="mock.toastBody">Total impayé : 320 000 FCFA. Touchez pour voir le détail.</span>
-        </div>
-        <div class="receipt">
-          <span class="stamp" data-i18n="mock.paid">Payé</span>
-          <div class="t" data-i18n="mock.receipt">Quittance de loyer</div>
-          <div class="no">QTL-2026-0126</div>
-          <div class="sum">
-            <div><small data-i18n="mock.period">Septembre 2026</small><b>150 000 FCFA</b></div>
-            <canvas class="qr" width="100" height="100" data-seed="7"></canvas>
-          </div>
-        </div>
+      </div>
+    </div>
+
+    <div class="rails">
+      <p class="wrap rails-label" data-i18n="rails.label">Tous les moyens de paiement de vos locataires</p>
+      <div class="marquee">
+        <ul class="marquee-track">
+          <li>MTN MoMo</li><li>Orange Money</li><li>Wave</li><li>M-Pesa</li><li>Moov Money</li><li data-i18n="rails.cash">Espèces</li><li data-i18n="rails.bank">Virement bancaire</li><li data-i18n="rails.cheque">Chèque</li><li>Airtel Money</li><li>Free Money</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <div class="rails">
-    <div class="wrap">
-      <p data-i18n="rails.label">Encaissez comme vos locataires paient :</p>
-      <ul>
-        <li data-i18n="mock.cash">Espèces</li>
-        <li>MTN MoMo</li>
-        <li>Orange Money</li>
-        <li>Wave</li>
-        <li>M-Pesa</li>
-        <li data-i18n="rails.bank">Virement bancaire</li>
-        <li data-i18n="rails.cheque">Chèque</li>
-      </ul>
+  <!-- ============ CHIFFRES ============ -->
+  <section class="stats">
+    <div class="wrap stats-row">
+      <div class="stat" data-reveal><b><span data-count="5">5</span></b><span data-i18n="stat.langs">langues, dont l'arabe</span></div>
+      <div class="stat" data-reveal style="--d:80ms"><b><span data-count="200">200</span>+</b><span data-i18n="stat.countries">pays et leurs monnaies</span></div>
+      <div class="stat" data-reveal style="--d:160ms"><b><span data-count="3">3</span></b><span data-i18n="stat.reminders">rappels automatiques par jour</span></div>
+      <div class="stat" data-reveal style="--d:240ms"><b><span data-count="0">0</span></b><span data-i18n="stat.fees">frais : Immo est gratuit</span></div>
     </div>
-  </div>
+  </section>
 
+  <!-- ============ FONCTIONNALITÉS ============ -->
   <section class="section" id="fonctionnalites">
     <div class="wrap">
-      <div class="section-head">
+      <div class="head" data-reveal>
         <span class="eyebrow" data-i18n="features.eyebrow">Fonctionnalités</span>
-        <h2 data-i18n="features.title">Tout le cycle du loyer, sans tableur ni cahier</h2>
-        <p class="lead" data-i18n="features.lead">Pensé avec des gestionnaires qui encaissent tous les jours, pour les agences comme pour les propriétaires qui gèrent eux-mêmes.</p>
+        <h2 data-i18n="features.title">Tout le cycle du loyer, dans une seule application</h2>
+        <p class="lead-dark" data-i18n="features.lead">Conçu avec des gestionnaires qui encaissent tous les jours : moins de saisie, moins d'oublis, plus de loyers encaissés.</p>
       </div>
-      <div class="features">
-        <article class="feature">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></svg></span>
-          <h3 data-i18n="f1.t">Encaissement et quittance en 30 secondes</h3>
-          <p data-i18n="f1.d">Choisissez le locataire, le montant et le moyen de paiement : la quittance PDF est prête, avec un QR code qui prouve qu'elle est authentique. Paiement partiel : une facture du reste à payer est émise.</p>
+      <div class="bento">
+        <article class="card card-shot span-2 row-2" data-reveal>
+          <div class="card-text">
+            <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <h3 data-i18n="b1.t">Suivi des impayés en temps réel</h3>
+            <p data-i18n="b1.d">Qui doit quoi, depuis combien de temps, par logement. Relance, appel, encaissement ou échéancier en un appui.</p>
+          </div>
+          <div class="shot shot-arrears"><img src="assets/img/app-arrears.webp" alt="" loading="lazy" width="1179" height="3375"></div>
         </article>
-        <article class="feature wide">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
-          <h3 data-i18n="f2.t">Rappels automatiques, trois fois par jour</h3>
-          <p data-i18n="f2.d">À 8 h, 13 h et 18 h, un résumé unique : locataires en retard, montants, jours de retard et échéances proches. Un appui ouvre le détail, un autre envoie la relance par WhatsApp ou SMS.</p>
+        <article class="card" data-reveal style="--d:60ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>
+          <h3 data-i18n="b2.t">Quittance en 30 secondes</h3>
+          <p data-i18n="b2.d">Locataire, montant, moyen de paiement : la quittance PDF est prête, signée, avec son QR code.</p>
+        </article>
+        <article class="card card-dark" data-reveal style="--d:120ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+          <h3 data-i18n="b3.t">Rappels à 8 h, 13 h et 18 h</h3>
+          <p data-i18n="b3.d">Un résumé unique des retards et des échéances proches, trois fois par jour.</p>
           <div class="times"><span>08:00</span><span>13:00</span><span>18:00</span></div>
         </article>
-        <article class="feature">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h7"/><path d="m15 17 2 2 4-4"/></svg></span>
-          <h3 data-i18n="f3.t">Rapprochement des relevés</h3>
-          <p data-i18n="f3.d">Importez un relevé MTN MoMo, Orange Money ou bancaire : chaque somme reçue est reliée à son locataire et à sa quittance. Les paiements oubliés ressortent en orange.</p>
+        <article class="card" data-reveal>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/><path d="m15 17 2 2 4-4"/></svg></span>
+          <h3 data-i18n="b4.t">Rapprochement des relevés</h3>
+          <p data-i18n="b4.d">Importez un relevé MTN MoMo, Orange Money ou bancaire : chaque somme est reliée à son locataire.</p>
         </article>
-        <article class="feature">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20V10l7-6 7 6v10"/><path d="M10 20v-6h4v6"/></svg></span>
-          <h3 data-i18n="f4.t">Logements, unités et occupation</h3>
-          <p data-i18n="f4.d">Immeubles, appartements, studios, boutiques : calendrier d'occupation, unités libres, annonces à partager et liste d'attente de candidats.</p>
+        <article class="card card-shot span-2" data-reveal style="--d:60ms">
+          <div class="card-text">
+            <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7z"/><path d="M9 12h6"/></svg></span>
+            <h3 data-i18n="b5.t">Contrats, préavis, mises en demeure</h3>
+            <p data-i18n="b5.d">Documents juridiques adaptés au pays (OHADA, Code civil), délais calculés, suivi de la réception.</p>
+          </div>
+          <div class="shot shot-contracts"><img src="assets/img/app-contracts.webp" alt="" loading="lazy" width="1179" height="2739"></div>
         </article>
-        <article class="feature">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
-          <h3 data-i18n="f5.t">Paiements et dettes, mois par mois</h3>
-          <p data-i18n="f5.d">Dû, payé, retard ou avance cumulés, avec la courbe d'évolution par logement et pour toute l'agence. Exportable en PDF.</p>
+        <article class="card" data-reveal style="--d:120ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 11h5M19.5 8.5v5"/></svg></span>
+          <h3 data-i18n="b6.t">Équipe et propriétaires</h3>
+          <p data-i18n="b6.d">Administrateur, gestionnaire, comptable, agent : chacun ses droits.</p>
         </article>
-        <article class="feature">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z"/><path d="M9 12h6"/></svg></span>
-          <h3 data-i18n="f6.t">Préavis et mises en demeure</h3>
-          <p data-i18n="f6.d">Documents prêts à signer, adaptés au pays : OHADA, Code civil, bail d'habitation ou commercial. Délais calculés et suivi de la date de réception.</p>
+        <article class="card" data-reveal>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg></span>
+          <h3 data-i18n="b7.t">Même sans réseau</h3>
+          <p data-i18n="b7.d">Les paiements s'enregistrent hors connexion et partent dès le retour du réseau.</p>
         </article>
-        <article class="feature">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 11h5M19.5 8.5v5"/></svg></span>
-          <h3 data-i18n="f7.t">Équipe et propriétaires</h3>
-          <p data-i18n="f7.d">Administrateur, gestionnaire, comptable, agent : chacun voit ce qui le concerne. Relevés des propriétaires, commissions et reversements.</p>
-        </article>
-        <article class="feature">
-          <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
-          <h3 data-i18n="f8.t">Partout, dans votre langue</h3>
-          <p data-i18n="f8.d">Français, anglais, espagnol, portugais et arabe. Choisissez le pays : la monnaie, les formats de date et le cadre juridique suivent.</p>
+        <article class="card" data-reveal style="--d:60ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+          <h3 data-i18n="b8.t">5 langues, tous les pays</h3>
+          <p data-i18n="b8.d">Le pays choisi règle la monnaie, les formats et le cadre juridique.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="section" id="comment" style="padding-top:0">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" data-i18n="how.eyebrow">Comment ça marche</span>
-        <h2 data-i18n="how.title">Opérationnel le jour même</h2>
+  <!-- ============ DOCUMENTS ============ -->
+  <section class="section docs-section" id="documents">
+    <div class="wrap docs">
+      <div class="docs-copy">
+        <div class="head" data-reveal>
+          <span class="eyebrow" data-i18n="docs.eyebrow">Documents</span>
+          <h2 data-i18n="docs.title">Des documents professionnels, générés en un clic</h2>
+          <p class="lead-dark" data-i18n="docs.lead">Logo, signature et cachet de votre agence, QR code de vérification, mise en page soignée.</p>
+        </div>
+        <div class="doc-tabs" role="tablist" data-reveal>
+          <button role="tab" type="button" class="doc-tab" data-doc="0" aria-selected="true"><b data-i18n="d.quittance">Quittance</b><span data-i18n="dq.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="1" aria-selected="false"><b data-i18n="d.facture">Facture du reste</b><span data-i18n="df.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="2" aria-selected="false"><b data-i18n="d.historique">Historique locataire</b><span data-i18n="dh.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="3" aria-selected="false"><b data-i18n="d.dettes">Paiements et dettes</b><span data-i18n="dd.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="4" aria-selected="false"><b data-i18n="d.impayes">État des impayés</b><span data-i18n="di.d"></span><i class="bar"></i></button>
+        </div>
+        <p class="docs-note" data-i18n="docs.note">Exemples réels générés par Immo. Coordonnées du locataire, signature, cachet et QR codes masqués.</p>
       </div>
-      <ol class="steps">
-        <li class="step"><h3 data-i18n="s1.t">Créez votre agence</h3><p data-i18n="s1.d">Choisissez le pays : monnaie, langue et fuseau horaire se règlent seuls.</p></li>
-        <li class="step"><h3 data-i18n="s2.t">Ajoutez logements et locataires</h3><p data-i18n="s2.d">Unités, loyers, charges, contrats et pièces d'identité, au même endroit.</p></li>
-        <li class="step"><h3 data-i18n="s3.t">Encaissez</h3><p data-i18n="s3.d">La quittance part par WhatsApp ou e-mail, avec votre signature et votre cachet.</p></li>
-        <li class="step"><h3 data-i18n="s4.t">Laissez Immo relancer</h3><p data-i18n="s4.d">Les retards remontent seuls ; vous agissez en un appui.</p></li>
+      <div class="doc-stack" id="doc-stack" data-reveal>
+        <button class="doc-card" data-doc="0" type="button"><img src="assets/img/doc-quittance.webp" alt="Quittance de loyer générée par Immo" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card" data-doc="1" type="button"><img src="assets/img/doc-facture.webp" alt="Facture du reste à payer générée par Immo" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card" data-doc="2" type="button"><img src="assets/img/doc-historique.webp" alt="Historique des paiements d'un locataire" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card" data-doc="3" type="button"><img src="assets/img/doc-dettes.webp" alt="Rapport paiements et dettes de l'agence" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card landscape" data-doc="4" type="button"><img src="assets/img/doc-impayes.webp" alt="État des impayés" loading="lazy" width="1600" height="1131"></button>
+        <span class="zoom-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg><span data-i18n="docs.open">Agrandir</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TÉLÉPHONE ET ORDINATEUR ============ -->
+  <section class="section devices-section">
+    <div class="wrap devices">
+      <div class="head" data-reveal>
+        <span class="eyebrow" data-i18n="dev.eyebrow">Téléphone et ordinateur</span>
+        <h2 data-i18n="dev.title">Un seul compte, partout</h2>
+        <p class="lead-dark" data-i18n="dev.lead">Encaissez sur le terrain avec le téléphone, analysez au bureau sur grand écran.</p>
+        <ul class="ticks">
+          <li data-i18n="dev1">Menu latéral et grands tableaux sur ordinateur</li>
+          <li data-i18n="dev2">Fonctionne hors connexion sur le téléphone</li>
+          <li data-i18n="dev3">Chaque action se retrouve aussitôt sur l'autre appareil</li>
+        </ul>
+        <a class="btn btn-primary js-app" href="app/"><span data-i18n="cta.web">Ouvrir Immo sur ordinateur</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+      </div>
+      <div class="device-scene" data-reveal aria-hidden="true">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span class="url">immo · app</span></div>
+          <div class="browser-body">
+            <aside class="rail">
+              <b>Immo</b>
+              <span class="on"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3z"/></svg><em data-i18n="mock.home">Accueil</em></span>
+              <span><svg viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 9h8v12"/></svg><em data-i18n="mock.props">Logements</em></span>
+              <span><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/></svg><em data-i18n="mock.tenants">Locataires</em></span>
+              <span><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><em data-i18n="mock.rents">Loyers</em></span>
+              <span><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg><em data-i18n="mock.more">Plus</em></span>
+            </aside>
+            <div class="browser-content">
+              <img class="bc-home" src="assets/img/app-home.webp" alt="" loading="lazy">
+              <img class="bc-doc" src="assets/img/doc-dettes.webp" alt="" loading="lazy">
+            </div>
+          </div>
+        </div>
+        <div class="phone phone-sm">
+          <div class="phone-notch"></div>
+          <div class="phone-screen still"><img src="assets/img/app-arrears.webp" alt="" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DÉMARRER ============ -->
+  <section class="section" id="demarrer">
+    <div class="wrap">
+      <div class="head center" data-reveal>
+        <span class="eyebrow" data-i18n="how.eyebrow">Démarrer</span>
+        <h2 data-i18n="how.title">Opérationnel en 4 étapes</h2>
+      </div>
+      <ol class="steps" id="steps">
+        <li class="step" data-reveal><span class="num">1</span><h3 data-i18n="s1.t">Créez votre agence</h3><p data-i18n="s1.d">Choisissez le pays : monnaie, langue et fuseau horaire se règlent seuls.</p></li>
+        <li class="step" data-reveal style="--d:120ms"><span class="num">2</span><h3 data-i18n="s2.t">Ajoutez logements et locataires</h3><p data-i18n="s2.d">Unités, loyers, charges, contrats et pièces d'identité au même endroit.</p></li>
+        <li class="step" data-reveal style="--d:240ms"><span class="num">3</span><h3 data-i18n="s3.t">Encaissez</h3><p data-i18n="s3.d">La quittance part par WhatsApp ou e-mail, signée et cachetée.</p></li>
+        <li class="step" data-reveal style="--d:360ms"><span class="num">4</span><h3 data-i18n="s4.t">Laissez Immo relancer</h3><p data-i18n="s4.d">Les retards remontent seuls ; vous agissez en un appui.</p></li>
       </ol>
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
-    <div class="wrap docs">
-      <div style="display:grid;gap:22px;min-width:0">
-        <div class="section-head" style="margin-bottom:0">
-          <span class="eyebrow" data-i18n="docs.eyebrow">Documents</span>
-          <h2 data-i18n="docs.title">Des documents que vos locataires prennent au sérieux</h2>
-          <p class="lead" data-i18n="docs.lead">Chaque document porte votre logo, votre signature et votre cachet. Le QR code renvoie vers une page de vérification : une quittance falsifiée est détectée.</p>
-        </div>
-        <ul class="doc-list">
-          <li><span class="tag">QTL</span><b data-i18n="d1.t">Quittances et factures</b><span data-i18n="d1.d">Reçu du montant payé, facture du reste à payer.</span></li>
-          <li><span class="tag purple">MED</span><b data-i18n="d2.t">Mises en demeure, préavis, congés</b><span data-i18n="d2.d">Sur une seule page, références juridiques du pays.</span></li>
-          <li><span class="tag orange">PDF</span><b data-i18n="d3.t">Historiques et rapports</b><span data-i18n="d3.d">Historique d'un locataire, impayés, rapport mensuel, relevé propriétaire.</span></li>
-        </ul>
-      </div>
-      <div class="paper" aria-hidden="true">
-        <div class="paper-head">
-          <div><div class="t" data-i18n="mock.receipt">Quittance de loyer</div><div class="no">QTL-2026-0126 · 29/09/2026</div></div>
-          <span class="stamp" style="position:static;transform:rotate(6deg)" data-i18n="mock.paid">Payé</span>
-        </div>
-        <table>
-          <tr><td data-i18n="paper.tenant">Locataire</td><td>Assyla Rodrigue André</td></tr>
-          <tr><td data-i18n="paper.unit">Logement</td><td>Vallée des princes · A1</td></tr>
-          <tr><td data-i18n="paper.rent">Loyer septembre 2026</td><td>140 000</td></tr>
-          <tr><td data-i18n="paper.charges">Charges (eau, gardiennage)</td><td>10 000</td></tr>
-          <tr class="total"><td data-i18n="paper.total">Total payé</td><td>150 000 FCFA</td></tr>
-        </table>
-        <div class="paper-foot">
-          <canvas class="qr" width="120" height="120" data-seed="19"></canvas>
-          <p data-i18n="paper.verify">Scannez pour vérifier l'authenticité de ce document.</p>
-          <div class="sign">
-            <svg viewBox="0 0 110 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 32c10-18 16-22 18-12s-2 16 4 8 10-20 14-14-4 18 4 12 12-16 18-10 2 10 10 6 18-10 34-8"/></svg>
-            <span data-i18n="paper.sign">Signature et cachet</span>
-          </div>
+  <!-- ============ SÉCURITÉ ============ -->
+  <section class="section security" id="securite">
+    <div class="wrap sec-row">
+      <div class="head" data-reveal>
+        <span class="eyebrow light" data-i18n="sec.eyebrow">Sécurité</span>
+        <h2 data-i18n="sec.title">Vos loyers sont de l'argent. Immo les protège comme tel.</h2>
+        <p class="lead" data-i18n="sec.lead">Chaque règle est vérifiée par le serveur, pas seulement par l'application.</p>
+        <div class="shield" aria-hidden="true">
+          <svg viewBox="0 0 120 140"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7BC943"/><stop offset="1" stop-color="#17A06B"/></linearGradient></defs><path class="shield-path" d="M60 6 12 24v38c0 34 21 58 48 70 27-12 48-36 48-70V24z" fill="none" stroke="url(#sg)" stroke-width="5"/><path class="shield-check" d="m38 70 15 15 30-32" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
+      <ul class="sec-grid">
+        <li data-reveal><b data-i18n="sec1.t">Agences cloisonnées</b><span data-i18n="sec1.d">Aucune agence ne peut voir les données d'une autre.</span></li>
+        <li data-reveal style="--d:60ms"><b data-i18n="sec2.t">Double authentification</b><span data-i18n="sec2.d">Code à 6 chiffres à la connexion.</span></li>
+        <li data-reveal style="--d:120ms"><b data-i18n="sec3.t">Paiements non effaçables</b><span data-i18n="sec3.d">Une erreur s'annule avec un motif, elle ne s'efface jamais.</span></li>
+        <li data-reveal style="--d:180ms"><b data-i18n="sec4.t">Journal d'activité</b><span data-i18n="sec4.d">Qui a encaissé, modifié ou annulé quoi, et quand.</span></li>
+        <li data-reveal style="--d:240ms"><b data-i18n="sec5.t">Protection anti-robot</b><span data-i18n="sec5.d">Inscription et connexion protégées.</span></li>
+        <li data-reveal style="--d:300ms"><b data-i18n="sec6.t">Verrouillage par code</b><span data-i18n="sec6.d">Code PIN ou empreinte digitale à l'ouverture.</span></li>
+      </ul>
     </div>
   </section>
 
-  <section class="section" id="securite" style="padding-top:0">
-    <div class="wrap">
-      <div class="secure">
-        <div style="display:grid;gap:16px;align-content:start">
-          <span class="eyebrow" data-i18n="sec.eyebrow">Sécurité</span>
-          <h2 data-i18n="sec.title">Vos loyers sont de l'argent. Immo les protège comme tel.</h2>
-          <p class="lead" data-i18n="sec.lead">Chaque règle est vérifiée par le serveur, pas seulement par l'application : un mot de passe volé ou une application modifiée ne suffisent pas.</p>
-        </div>
-        <ul>
-          <li><b data-i18n="sec1.t">Agences cloisonnées</b><span data-i18n="sec1.d">Aucune agence ne peut voir les données d'une autre.</span></li>
-          <li><b data-i18n="sec2.t">Double authentification</b><span data-i18n="sec2.d">Code à 6 chiffres à chaque connexion, obligatoire pour les comptes qui gèrent l'argent.</span></li>
-          <li><b data-i18n="sec3.t">Paiements non effaçables</b><span data-i18n="sec3.d">Une erreur s'annule avec un motif, elle ne s'efface pas.</span></li>
-          <li><b data-i18n="sec4.t">Journal d'activité</b><span data-i18n="sec4.d">Qui a encaissé, modifié ou annulé quoi, et quand.</span></li>
-          <li><b data-i18n="sec5.t">Protection anti-robot</b><span data-i18n="sec5.d">Inscription et connexion protégées contre les attaques automatisées.</span></li>
-          <li><b data-i18n="sec6.t">Verrouillage du téléphone</b><span data-i18n="sec6.d">Code PIN ou empreinte digitale à l'ouverture d'Immo.</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="tarif" style="padding-top:0">
-    <div class="wrap price">
-      <div class="section-head" style="margin-bottom:0">
+  <!-- ============ TARIF ============ -->
+  <section class="section" id="tarif">
+    <div class="wrap price-row">
+      <div class="head" data-reveal>
         <span class="eyebrow" data-i18n="price.eyebrow">Tarif</span>
-        <h2 data-i18n="price.title">Gratuit. Toutes les fonctionnalités incluses.</h2>
-        <p class="lead" data-i18n="price.lead">Pas de limite sur le nombre de logements, de locataires ou de membres de l'équipe. Pas de carte bancaire à fournir.</p>
+        <h2 data-i18n="price.title">Gratuit. Vraiment.</h2>
+        <p class="lead-dark" data-i18n="price.lead">Toutes les fonctionnalités, sans limite. Aucune carte bancaire demandée.</p>
       </div>
-      <div class="price-card">
-        <div class="amount" data-i18n="price.amount">0 FCFA</div>
+      <div class="price-card" data-reveal>
+        <div class="price-top"><span class="plan" data-i18n="price.plan">Immo</span><span class="amount" data-i18n="price.amount">Gratuit</span><span class="per" data-i18n="price.per">toutes fonctionnalités incluses</span></div>
         <ul class="checks">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><span data-i18n="pc1">Quittances, factures et documents juridiques</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><span data-i18n="pc2">Rappels, rapprochement des relevés, rapports</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><span data-i18n="pc3">Équipe, propriétaires, plusieurs agences</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg><span data-i18n="pc4">Mode hors connexion et 5 langues</span></li>
+          <li data-i18n="pc1">Quittances, factures et documents juridiques</li>
+          <li data-i18n="pc2">Rappels automatiques et suivi des impayés</li>
+          <li data-i18n="pc3">Rapprochement des relevés et rapports</li>
+          <li data-i18n="pc4">Équipe, propriétaires, plusieurs agences</li>
+          <li data-i18n="pc5">Téléphone, ordinateur et hors connexion</li>
         </ul>
-        <a class="btn btn-primary js-app" href="app/" data-i18n="cta.start">Commencer gratuitement</a>
+        <a class="btn btn-primary btn-lg btn-block js-app" href="app/" data-i18n="cta.start">Commencer gratuitement</a>
       </div>
     </div>
   </section>
 
-  <section class="section" id="faq" style="padding-top:0">
-    <div class="wrap">
-      <div class="section-head">
+  <!-- ============ FAQ ============ -->
+  <section class="section faq-section">
+    <div class="wrap faq-row">
+      <div class="head" data-reveal>
         <span class="eyebrow" data-i18n="faq.eyebrow">Questions fréquentes</span>
         <h2 data-i18n="faq.title">Avant de commencer</h2>
       </div>
-      <div class="faq">
-        <details><summary data-i18n="q1">Sur quels appareils fonctionne Immo ?</summary><p data-i18n="a1">Sur les téléphones Android et dans le navigateur de n'importe quel ordinateur. C'est le même compte et les mêmes données : ce que vous faites sur l'un se retrouve aussitôt sur l'autre.</p></details>
-        <details><summary data-i18n="q2">Faut-il une connexion internet en permanence ?</summary><p data-i18n="a2">Non. Les fiches des locataires restent consultables et les paiements s'enregistrent hors connexion ; ils sont envoyés dès le retour du réseau.</p></details>
-        <details><summary data-i18n="q3">Mes locataires doivent-ils installer Immo ?</summary><p data-i18n="a3">Non. Ils reçoivent leurs quittances et leurs rappels par WhatsApp, SMS ou e-mail.</p></details>
-        <details><summary data-i18n="q4">Immo fonctionne-t-il hors du Cameroun ?</summary><p data-i18n="a4">Oui. À la création de l'agence, le choix du pays règle la monnaie, les formats et le cadre juridique des documents.</p></details>
-        <details><summary data-i18n="q5">Puis-je gérer plusieurs agences ?</summary><p data-i18n="a5">Oui. Un même compte peut appartenir à plusieurs agences et passer de l'une à l'autre.</p></details>
+      <div class="faq" data-reveal>
+        <details><summary data-i18n="q1">Sur quels appareils fonctionne Immo ?</summary><div class="ans"><p data-i18n="a1"></p></div></details>
+        <details><summary data-i18n="q2">Faut-il une connexion internet en permanence ?</summary><div class="ans"><p data-i18n="a2"></p></div></details>
+        <details><summary data-i18n="q3">Mes locataires doivent-ils installer Immo ?</summary><div class="ans"><p data-i18n="a3"></p></div></details>
+        <details><summary data-i18n="q4">Immo fonctionne-t-il hors du Cameroun ?</summary><div class="ans"><p data-i18n="a4"></p></div></details>
+        <details><summary data-i18n="q5">Mes données sont-elles en sécurité ?</summary><div class="ans"><p data-i18n="a5"></p></div></details>
+        <details><summary data-i18n="q6">Puis-je gérer plusieurs agences ?</summary><div class="ans"><p data-i18n="a6"></p></div></details>
       </div>
     </div>
   </section>
 
-  <section class="section" id="contact" style="padding-top:0">
-    <div class="wrap contact">
-      <div class="section-head" style="margin-bottom:0">
-        <span class="eyebrow" data-i18n="contact.eyebrow">Contact</span>
-        <h2 data-i18n="contact.title">Une démonstration de 15 minutes, sur votre téléphone</h2>
-        <p class="lead" data-i18n="contact.lead">Écrivez-nous : nous installons Immo avec vous et créons votre agence ensemble.</p>
+  <!-- ============ APPEL FINAL / CONTACT ============ -->
+  <section class="final" id="contact">
+    <div class="final-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
+    <div class="wrap final-row">
+      <div data-reveal>
+        <h2 data-i18n="final.title">Prêt à simplifier votre gestion locative ?</h2>
+        <p class="lead" data-i18n="final.lead">Créez votre agence en 5 minutes, ou demandez une démonstration guidée de 15 minutes.</p>
         <div class="cta-row">
-          <a class="btn btn-primary js-demo" href="#contact">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg>
-            <span data-i18n="cta.whatsapp">Écrire sur WhatsApp</span>
-          </a>
-          <a class="btn btn-ghost js-download" href="#contact" data-i18n="cta.android">Télécharger pour Android</a>
+          <a class="btn btn-light btn-lg js-app" href="app/"><span data-i18n="cta.start">Commencer gratuitement</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn btn-glass btn-lg js-demo" href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="cta.whatsapp">Écrire sur WhatsApp</span></a>
         </div>
       </div>
-      <div class="contact-card" id="contact-card"></div>
+      <div class="contact-card" id="contact-card" data-reveal></div>
     </div>
   </section>
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <span>© <span id="year">2026</span> Immo · <span data-i18n="foot.tag">Une gestion simple, une tranquillité assurée.</span></span>
-    <button class="theme-btn" id="theme-btn" type="button" data-i18n="foot.theme">Thème clair / sombre</button>
+  <div class="wrap foot-row">
+    <div class="foot-brand">
+      <a class="brand dark" href="#hero"><img src="assets/immo-192.png" alt="" width="34" height="34"><span>Immo</span></a>
+      <p data-i18n="foot.tag">Une gestion simple, une tranquillité assurée.</p>
+    </div>
+    <div class="foot-col">
+      <b data-i18n="foot.product">Produit</b>
+      <a href="#fonctionnalites" data-i18n="nav.features">Fonctionnalités</a>
+      <a href="#documents" data-i18n="nav.docs">Documents</a>
+      <a href="#tarif" data-i18n="nav.price">Tarif</a>
+      <a href="app/" class="js-app" data-i18n="cta.login">Se connecter</a>
+    </div>
+    <div class="foot-col" id="foot-contact"><b data-i18n="foot.contact">Contact</b></div>
   </div>
+  <div class="wrap foot-bottom"><span>© <span id="year">2026</span> Immo. <span data-i18n="foot.rights">Tous droits réservés.</span></span></div>
 </footer>
 
-<script>
-/* ---------------------------------------------------------------------------
-   Coordonnées et liens : à compléter ici (un seul endroit).
-   DOWNLOAD_URL : lien direct vers l'APK Android ; vide = renvoi vers Contact.
---------------------------------------------------------------------------- */
-const CONFIG = {
-  email: "datacraf26@gmail.com",
-  whatsapp: "237678904061", // format international (Cameroun +237)
-  whatsappDisplay: "+237 678 90 40 61",
-  city: "",
-  company: "",
-  DOWNLOAD_URL: "",
-  APP_URL: "app/"         // version Web complète d'Immo (même compte, mêmes données)
-};
+<dialog class="lightbox" id="lightbox">
+  <button class="lb-close" id="lb-close" type="button" aria-label="Fermer / Close">×</button>
+  <img id="lb-img" alt="">
+</dialog>
 
-const I18N = {
-  fr: {
-    "nav.features": "Fonctionnalités", "nav.how": "Comment ça marche", "nav.security": "Sécurité", "nav.price": "Tarif", "nav.contact": "Contact",
-    "cta.web": "Ouvrir Immo sur ordinateur", "cta.login": "Se connecter", "cta.start": "Commencer gratuitement", "proof.sync": "Téléphone et ordinateur, mêmes données",
-    "cta.download": "Télécharger", "cta.android": "Télécharger pour Android", "cta.demo": "Demander une démonstration", "cta.whatsapp": "Écrire sur WhatsApp",
-    "hero.eyebrow": "Gestion locative pour agences et propriétaires",
-    "hero.title": "Chaque loyer, de l'encaissement <em>à la quittance</em>.",
-    "hero.lead": "Immo encaisse, envoie la quittance par WhatsApp, relance les retards trois fois par jour et rapproche vos relevés Mobile Money. Sur votre téléphone comme sur votre ordinateur, dans votre langue et votre monnaie.",
-    "proof.free": "Gratuit", "proof.langs": "5 langues, toutes les monnaies", "proof.offline": "Fonctionne hors connexion",
-    "mock.hello": "Bonjour,", "mock.collected": "Encaissé ce mois", "mock.late": "Impayés", "mock.cash": "Espèces", "mock.transfer": "Virement",
-    "mock.toastTitle": "Retards de paiement (3)", "mock.toastBody": "Total impayé : 320 000 FCFA. Touchez pour voir le détail.",
-    "mock.paid": "Payé", "mock.receipt": "Quittance de loyer", "mock.period": "Septembre 2026",
-    "rails.label": "Encaissez comme vos locataires paient :", "rails.bank": "Virement bancaire", "rails.cheque": "Chèque",
-    "features.eyebrow": "Fonctionnalités", "features.title": "Tout le cycle du loyer, sans tableur ni cahier",
-    "features.lead": "Pensé avec des gestionnaires qui encaissent tous les jours, pour les agences comme pour les propriétaires qui gèrent eux-mêmes.",
-    "f1.t": "Encaissement et quittance en 30 secondes", "f1.d": "Choisissez le locataire, le montant et le moyen de paiement : la quittance PDF est prête, avec un QR code qui prouve qu'elle est authentique. Paiement partiel : une facture du reste à payer est émise.",
-    "f2.t": "Rappels automatiques, trois fois par jour", "f2.d": "À 8 h, 13 h et 18 h, un résumé unique : locataires en retard, montants, jours de retard et échéances proches. Un appui ouvre le détail, un autre envoie la relance par WhatsApp ou SMS.",
-    "f3.t": "Rapprochement des relevés", "f3.d": "Importez un relevé MTN MoMo, Orange Money ou bancaire : chaque somme reçue est reliée à son locataire et à sa quittance. Les paiements oubliés ressortent en orange.",
-    "f4.t": "Logements, unités et occupation", "f4.d": "Immeubles, appartements, studios, boutiques : calendrier d'occupation, unités libres, annonces à partager et liste d'attente de candidats.",
-    "f5.t": "Paiements et dettes, mois par mois", "f5.d": "Dû, payé, retard ou avance cumulés, avec la courbe d'évolution par logement et pour toute l'agence. Exportable en PDF.",
-    "f6.t": "Préavis et mises en demeure", "f6.d": "Documents prêts à signer, adaptés au pays : OHADA, Code civil, bail d'habitation ou commercial. Délais calculés et suivi de la date de réception.",
-    "f7.t": "Équipe et propriétaires", "f7.d": "Administrateur, gestionnaire, comptable, agent : chacun voit ce qui le concerne. Relevés des propriétaires, commissions et reversements.",
-    "f8.t": "Partout, dans votre langue", "f8.d": "Français, anglais, espagnol, portugais et arabe. Choisissez le pays : la monnaie, les formats de date et le cadre juridique suivent.",
-    "how.eyebrow": "Comment ça marche", "how.title": "Opérationnel le jour même",
-    "s1.t": "Créez votre agence", "s1.d": "Choisissez le pays : monnaie, langue et fuseau horaire se règlent seuls.",
-    "s2.t": "Ajoutez logements et locataires", "s2.d": "Unités, loyers, charges, contrats et pièces d'identité, au même endroit.",
-    "s3.t": "Encaissez", "s3.d": "La quittance part par WhatsApp ou e-mail, avec votre signature et votre cachet.",
-    "s4.t": "Laissez Immo relancer", "s4.d": "Les retards remontent seuls ; vous agissez en un appui.",
-    "docs.eyebrow": "Documents", "docs.title": "Des documents que vos locataires prennent au sérieux",
-    "docs.lead": "Chaque document porte votre logo, votre signature et votre cachet. Le QR code renvoie vers une page de vérification : une quittance falsifiée est détectée.",
-    "d1.t": "Quittances et factures", "d1.d": "Reçu du montant payé, facture du reste à payer.",
-    "d2.t": "Mises en demeure, préavis, congés", "d2.d": "Sur une seule page, références juridiques du pays.",
-    "d3.t": "Historiques et rapports", "d3.d": "Historique d'un locataire, impayés, rapport mensuel, relevé propriétaire.",
-    "paper.tenant": "Locataire", "paper.unit": "Logement", "paper.rent": "Loyer septembre 2026", "paper.charges": "Charges (eau, gardiennage)", "paper.total": "Total payé",
-    "paper.verify": "Scannez pour vérifier l'authenticité de ce document.", "paper.sign": "Signature et cachet",
-    "sec.eyebrow": "Sécurité", "sec.title": "Vos loyers sont de l'argent. Immo les protège comme tel.",
-    "sec.lead": "Chaque règle est vérifiée par le serveur, pas seulement par l'application : un mot de passe volé ou une application modifiée ne suffisent pas.",
-    "sec1.t": "Agences cloisonnées", "sec1.d": "Aucune agence ne peut voir les données d'une autre.",
-    "sec2.t": "Double authentification", "sec2.d": "Code à 6 chiffres à chaque connexion, obligatoire pour les comptes qui gèrent l'argent.",
-    "sec3.t": "Paiements non effaçables", "sec3.d": "Une erreur s'annule avec un motif, elle ne s'efface pas.",
-    "sec4.t": "Journal d'activité", "sec4.d": "Qui a encaissé, modifié ou annulé quoi, et quand.",
-    "sec5.t": "Protection anti-robot", "sec5.d": "Inscription et connexion protégées contre les attaques automatisées.",
-    "sec6.t": "Verrouillage du téléphone", "sec6.d": "Code PIN ou empreinte digitale à l'ouverture d'Immo.",
-    "price.eyebrow": "Tarif", "price.title": "Gratuit. Toutes les fonctionnalités incluses.",
-    "price.lead": "Pas de limite sur le nombre de logements, de locataires ou de membres de l'équipe. Pas de carte bancaire à fournir.",
-    "price.amount": "Gratuit",
-    "pc1": "Quittances, factures et documents juridiques", "pc2": "Rappels, rapprochement des relevés, rapports", "pc3": "Équipe, propriétaires, plusieurs agences", "pc4": "Mode hors connexion et 5 langues",
-    "faq.eyebrow": "Questions fréquentes", "faq.title": "Avant de commencer",
-    "q1": "Sur quels appareils fonctionne Immo ?", "a1": "Sur les téléphones Android et dans le navigateur de n'importe quel ordinateur. C'est le même compte et les mêmes données : ce que vous faites sur l'un se retrouve aussitôt sur l'autre.",
-    "q2": "Faut-il une connexion internet en permanence ?", "a2": "Non. Les fiches des locataires restent consultables et les paiements s'enregistrent hors connexion ; ils sont envoyés dès le retour du réseau.",
-    "q3": "Mes locataires doivent-ils installer Immo ?", "a3": "Non. Ils reçoivent leurs quittances et leurs rappels par WhatsApp, SMS ou e-mail.",
-    "q4": "Immo fonctionne-t-il hors du Cameroun ?", "a4": "Oui. À la création de l'agence, le choix du pays règle la monnaie, les formats et le cadre juridique des documents.",
-    "q5": "Puis-je gérer plusieurs agences ?", "a5": "Oui. Un même compte peut appartenir à plusieurs agences et passer de l'une à l'autre.",
-    "contact.eyebrow": "Contact", "contact.title": "Une démonstration de 15 minutes, sur votre téléphone",
-    "contact.lead": "Écrivez-nous : nous installons Immo avec vous et créons votre agence ensemble.",
-    "contact.email": "E-mail", "contact.whatsapp": "WhatsApp", "contact.city": "Ville", "contact.copy": "Copier", "contact.copied": "Copié",
-    "contact.soon": "Coordonnées bientôt disponibles.",
-    "demo.message": "Bonjour, je souhaite une démonstration d'Immo.",
-    "foot.tag": "Une gestion simple, une tranquillité assurée.", "foot.theme": "Thème clair / sombre"
-  },
-  en: {
-    "nav.features": "Features", "nav.how": "How it works", "nav.security": "Security", "nav.price": "Pricing", "nav.contact": "Contact",
-    "cta.web": "Open Immo on your computer", "cta.login": "Sign in", "cta.start": "Start for free", "proof.sync": "Phone and computer, same data",
-    "cta.download": "Download", "cta.android": "Download for Android", "cta.demo": "Request a demo", "cta.whatsapp": "Message us on WhatsApp",
-    "hero.eyebrow": "Property management for agencies and landlords",
-    "hero.title": "Every rent, from payment <em>to receipt</em>.",
-    "hero.lead": "Immo records payments, sends the receipt by WhatsApp, chases late payers three times a day and reconciles your Mobile Money statements. On your phone and your computer, in your language and currency.",
-    "proof.free": "Free", "proof.langs": "5 languages, every currency", "proof.offline": "Works offline",
-    "mock.hello": "Hello,", "mock.collected": "Collected this month", "mock.late": "Unpaid", "mock.cash": "Cash", "mock.transfer": "Transfer",
-    "mock.toastTitle": "Late payments (3)", "mock.toastBody": "Total unpaid: 320,000 FCFA. Tap to see the details.",
-    "mock.paid": "Paid", "mock.receipt": "Rent receipt", "mock.period": "September 2026",
-    "rails.label": "Get paid the way your tenants pay:", "rails.bank": "Bank transfer", "rails.cheque": "Cheque",
-    "features.eyebrow": "Features", "features.title": "The whole rent cycle, without spreadsheets or notebooks",
-    "features.lead": "Built with managers who collect rent every day, for agencies and for landlords who manage their own properties.",
-    "f1.t": "Payment and receipt in 30 seconds", "f1.d": "Pick the tenant, the amount and the payment method: the PDF receipt is ready, with a QR code proving it is genuine. Partial payment: an invoice for the balance is issued.",
-    "f2.t": "Automatic reminders, three times a day", "f2.d": "At 8 am, 1 pm and 6 pm, a single summary: tenants in arrears, amounts, days late and upcoming due dates. One tap opens the details, another sends the reminder by WhatsApp or SMS.",
-    "f3.t": "Statement reconciliation", "f3.d": "Import an MTN MoMo, Orange Money or bank statement: every amount received is matched to its tenant and receipt. Unrecorded payments show up in orange.",
-    "f4.t": "Properties, units and occupancy", "f4.d": "Buildings, flats, studios, shops: occupancy calendar, vacant units, shareable listings and a waiting list of applicants.",
-    "f5.t": "Payments and arrears, month by month", "f5.d": "Due, paid, cumulative arrears or advance, with the trend curve per property and for the whole agency. Exportable as PDF.",
-    "f6.t": "Notices and formal demands", "f6.d": "Ready-to-sign documents adapted to the country: OHADA, Civil Code, residential or commercial lease. Deadlines calculated and receipt date tracked.",
-    "f7.t": "Team and owners", "f7.d": "Administrator, manager, accountant, agent: everyone sees what concerns them. Owner statements, commissions and payouts.",
-    "f8.t": "Anywhere, in your language", "f8.d": "French, English, Spanish, Portuguese and Arabic. Choose the country: currency, date formats and legal framework follow.",
-    "how.eyebrow": "How it works", "how.title": "Up and running the same day",
-    "s1.t": "Create your agency", "s1.d": "Choose the country: currency, language and time zone set themselves.",
-    "s2.t": "Add properties and tenants", "s2.d": "Units, rents, charges, leases and ID documents, all in one place.",
-    "s3.t": "Collect rent", "s3.d": "The receipt goes out by WhatsApp or email, with your signature and stamp.",
-    "s4.t": "Let Immo chase late payers", "s4.d": "Arrears surface on their own; you act in one tap.",
-    "docs.eyebrow": "Documents", "docs.title": "Documents your tenants take seriously",
-    "docs.lead": "Every document carries your logo, signature and stamp. The QR code leads to a verification page: a forged receipt is detected.",
-    "d1.t": "Receipts and invoices", "d1.d": "Receipt for the amount paid, invoice for the balance due.",
-    "d2.t": "Formal demands, notices, terminations", "d2.d": "On a single page, with the country's legal references.",
-    "d3.t": "Histories and reports", "d3.d": "Tenant history, arrears, monthly report, owner statement.",
-    "paper.tenant": "Tenant", "paper.unit": "Property", "paper.rent": "Rent September 2026", "paper.charges": "Charges (water, security)", "paper.total": "Total paid",
-    "paper.verify": "Scan to verify this document is genuine.", "paper.sign": "Signature and stamp",
-    "sec.eyebrow": "Security", "sec.title": "Rent is money. Immo protects it that way.",
-    "sec.lead": "Every rule is enforced by the server, not just by the app: a stolen password or a tampered app is not enough.",
-    "sec1.t": "Isolated agencies", "sec1.d": "No agency can see another agency's data.",
-    "sec2.t": "Two-factor authentication", "sec2.d": "A 6-digit code at each sign-in, mandatory for accounts that handle money.",
-    "sec3.t": "Payments cannot be erased", "sec3.d": "A mistake is reversed with a reason, never deleted.",
-    "sec4.t": "Activity log", "sec4.d": "Who collected, changed or reversed what, and when.",
-    "sec5.t": "Anti-robot protection", "sec5.d": "Sign-up and sign-in protected against automated attacks.",
-    "sec6.t": "Phone lock", "sec6.d": "PIN code or fingerprint when opening Immo.",
-    "price.eyebrow": "Pricing", "price.title": "Free. Every feature included.",
-    "price.lead": "No limit on properties, tenants or team members. No bank card required.",
-    "price.amount": "Free",
-    "pc1": "Receipts, invoices and legal documents", "pc2": "Reminders, statement reconciliation, reports", "pc3": "Team, owners, several agencies", "pc4": "Offline mode and 5 languages",
-    "faq.eyebrow": "FAQ", "faq.title": "Before you start",
-    "q1": "Which devices does Immo run on?", "a1": "Android phones and the browser of any computer. Same account, same data: what you do on one shows up at once on the other.",
-    "q2": "Do I need to be online all the time?", "a2": "No. Tenant records stay available and payments are saved offline; they are sent as soon as the network is back.",
-    "q3": "Do my tenants need to install Immo?", "a3": "No. They receive their receipts and reminders by WhatsApp, SMS or email.",
-    "q4": "Does Immo work outside Cameroon?", "a4": "Yes. When you create the agency, the country you choose sets the currency, formats and legal framework of the documents.",
-    "q5": "Can I manage several agencies?", "a5": "Yes. One account can belong to several agencies and switch between them.",
-    "contact.eyebrow": "Contact", "contact.title": "A 15-minute demo, on your phone",
-    "contact.lead": "Write to us: we install Immo with you and set up your agency together.",
-    "contact.email": "Email", "contact.whatsapp": "WhatsApp", "contact.city": "City", "contact.copy": "Copy", "contact.copied": "Copied",
-    "contact.soon": "Contact details coming soon.",
-    "demo.message": "Hello, I would like a demo of Immo.",
-    "foot.tag": "Simple management, peace of mind.", "foot.theme": "Light / dark theme"
-  },
-  es: {
-    "nav.features": "Funciones", "nav.how": "Cómo funciona", "nav.security": "Seguridad", "nav.price": "Precio", "nav.contact": "Contacto",
-    "cta.web": "Abrir Immo en el ordenador", "cta.login": "Iniciar sesión", "cta.start": "Empezar gratis", "proof.sync": "Teléfono y ordenador, los mismos datos",
-    "cta.download": "Descargar", "cta.android": "Descargar para Android", "cta.demo": "Solicitar una demostración", "cta.whatsapp": "Escribir por WhatsApp",
-    "hero.eyebrow": "Gestión de alquileres para agencias y propietarios",
-    "hero.title": "Cada alquiler, del cobro <em>al recibo</em>.",
-    "hero.lead": "Immo cobra, envía el recibo por WhatsApp, reclama los retrasos tres veces al día y concilia sus extractos de Mobile Money. En su teléfono y en su ordenador, en su idioma y su moneda.",
-    "proof.free": "Gratis", "proof.langs": "5 idiomas, todas las monedas", "proof.offline": "Funciona sin conexión",
-    "mock.hello": "Hola,", "mock.collected": "Cobrado este mes", "mock.late": "Impagos", "mock.cash": "Efectivo", "mock.transfer": "Transferencia",
-    "mock.toastTitle": "Pagos atrasados (3)", "mock.toastBody": "Total impagado: 320 000 FCFA. Toque para ver el detalle.",
-    "mock.paid": "Pagado", "mock.receipt": "Recibo de alquiler", "mock.period": "Septiembre 2026",
-    "rails.label": "Cobre como pagan sus inquilinos:", "rails.bank": "Transferencia bancaria", "rails.cheque": "Cheque",
-    "features.eyebrow": "Funciones", "features.title": "Todo el ciclo del alquiler, sin hojas de cálculo ni cuadernos",
-    "features.lead": "Diseñado con gestores que cobran cada día, para agencias y para propietarios que gestionan por sí mismos.",
-    "f1.t": "Cobro y recibo en 30 segundos", "f1.d": "Elija el inquilino, el importe y el medio de pago: el recibo PDF está listo, con un código QR que demuestra su autenticidad. Pago parcial: se emite una factura del saldo pendiente.",
-    "f2.t": "Recordatorios automáticos, tres veces al día", "f2.d": "A las 8, 13 y 18 h, un único resumen: inquilinos atrasados, importes, días de retraso y vencimientos próximos. Un toque abre el detalle, otro envía el recordatorio por WhatsApp o SMS.",
-    "f3.t": "Conciliación de extractos", "f3.d": "Importe un extracto de MTN MoMo, Orange Money o bancario: cada importe recibido se vincula a su inquilino y a su recibo. Los pagos olvidados aparecen en naranja.",
-    "f4.t": "Inmuebles, unidades y ocupación", "f4.d": "Edificios, pisos, estudios, locales: calendario de ocupación, unidades libres, anuncios para compartir y lista de espera de candidatos.",
-    "f5.t": "Pagos y deudas, mes a mes", "f5.d": "Debido, pagado, retraso o adelanto acumulados, con la curva de evolución por inmueble y para toda la agencia. Exportable en PDF.",
-    "f6.t": "Preavisos y requerimientos", "f6.d": "Documentos listos para firmar, adaptados al país: OHADA, Código Civil, alquiler de vivienda o comercial. Plazos calculados y seguimiento de la fecha de recepción.",
-    "f7.t": "Equipo y propietarios", "f7.d": "Administrador, gestor, contable, agente: cada uno ve lo que le corresponde. Extractos de propietarios, comisiones y pagos.",
-    "f8.t": "En todas partes, en su idioma", "f8.d": "Francés, inglés, español, portugués y árabe. Elija el país: la moneda, los formatos de fecha y el marco jurídico se adaptan.",
-    "how.eyebrow": "Cómo funciona", "how.title": "Operativo el mismo día",
-    "s1.t": "Cree su agencia", "s1.d": "Elija el país: moneda, idioma y huso horario se configuran solos.",
-    "s2.t": "Añada inmuebles e inquilinos", "s2.d": "Unidades, alquileres, gastos, contratos y documentos de identidad, en un mismo lugar.",
-    "s3.t": "Cobre", "s3.d": "El recibo sale por WhatsApp o correo, con su firma y su sello.",
-    "s4.t": "Deje que Immo reclame", "s4.d": "Los retrasos aparecen solos; usted actúa con un toque.",
-    "docs.eyebrow": "Documentos", "docs.title": "Documentos que sus inquilinos se toman en serio",
-    "docs.lead": "Cada documento lleva su logotipo, su firma y su sello. El código QR lleva a una página de verificación: un recibo falsificado se detecta.",
-    "d1.t": "Recibos y facturas", "d1.d": "Recibo del importe pagado, factura del saldo pendiente.",
-    "d2.t": "Requerimientos, preavisos, rescisiones", "d2.d": "En una sola página, con las referencias jurídicas del país.",
-    "d3.t": "Historiales e informes", "d3.d": "Historial de un inquilino, impagos, informe mensual, extracto del propietario.",
-    "paper.tenant": "Inquilino", "paper.unit": "Inmueble", "paper.rent": "Alquiler septiembre 2026", "paper.charges": "Gastos (agua, vigilancia)", "paper.total": "Total pagado",
-    "paper.verify": "Escanee para verificar la autenticidad de este documento.", "paper.sign": "Firma y sello",
-    "sec.eyebrow": "Seguridad", "sec.title": "Los alquileres son dinero. Immo los protege como tal.",
-    "sec.lead": "Cada regla la verifica el servidor, no solo la aplicación: una contraseña robada o una aplicación modificada no bastan.",
-    "sec1.t": "Agencias aisladas", "sec1.d": "Ninguna agencia puede ver los datos de otra.",
-    "sec2.t": "Autenticación de dos factores", "sec2.d": "Código de 6 dígitos en cada inicio de sesión, obligatorio para las cuentas que gestionan dinero.",
-    "sec3.t": "Pagos imborrables", "sec3.d": "Un error se anula con un motivo, no se borra.",
-    "sec4.t": "Registro de actividad", "sec4.d": "Quién cobró, modificó o anuló qué, y cuándo.",
-    "sec5.t": "Protección antirrobot", "sec5.d": "Registro e inicio de sesión protegidos contra ataques automatizados.",
-    "sec6.t": "Bloqueo del teléfono", "sec6.d": "Código PIN o huella digital al abrir Immo.",
-    "price.eyebrow": "Precio", "price.title": "Gratis. Todas las funciones incluidas.",
-    "price.lead": "Sin límite de inmuebles, inquilinos ni miembros del equipo. Sin tarjeta bancaria.",
-    "price.amount": "Gratis",
-    "pc1": "Recibos, facturas y documentos jurídicos", "pc2": "Recordatorios, conciliación de extractos, informes", "pc3": "Equipo, propietarios, varias agencias", "pc4": "Modo sin conexión y 5 idiomas",
-    "faq.eyebrow": "Preguntas frecuentes", "faq.title": "Antes de empezar",
-    "q1": "¿En qué dispositivos funciona Immo?", "a1": "En teléfonos Android y en el navegador de cualquier ordenador. La misma cuenta y los mismos datos: lo que hace en uno aparece al instante en el otro.",
-    "q2": "¿Hace falta conexión a internet todo el tiempo?", "a2": "No. Las fichas de los inquilinos siguen disponibles y los pagos se registran sin conexión; se envían en cuanto vuelve la red.",
-    "q3": "¿Mis inquilinos deben instalar Immo?", "a3": "No. Reciben sus recibos y recordatorios por WhatsApp, SMS o correo.",
-    "q4": "¿Immo funciona fuera de Camerún?", "a4": "Sí. Al crear la agencia, el país elegido define la moneda, los formatos y el marco jurídico de los documentos.",
-    "q5": "¿Puedo gestionar varias agencias?", "a5": "Sí. Una misma cuenta puede pertenecer a varias agencias y pasar de una a otra.",
-    "contact.eyebrow": "Contacto", "contact.title": "Una demostración de 15 minutos, en su teléfono",
-    "contact.lead": "Escríbanos: instalamos Immo con usted y creamos su agencia juntos.",
-    "contact.email": "Correo", "contact.whatsapp": "WhatsApp", "contact.city": "Ciudad", "contact.copy": "Copiar", "contact.copied": "Copiado",
-    "contact.soon": "Datos de contacto disponibles pronto.",
-    "demo.message": "Hola, me gustaría una demostración de Immo.",
-    "foot.tag": "Una gestión sencilla, una tranquilidad asegurada.", "foot.theme": "Tema claro / oscuro"
-  },
-  pt: {
-    "nav.features": "Funcionalidades", "nav.how": "Como funciona", "nav.security": "Segurança", "nav.price": "Preço", "nav.contact": "Contacto",
-    "cta.web": "Abrir o Immo no computador", "cta.login": "Entrar", "cta.start": "Começar gratuitamente", "proof.sync": "Telemóvel e computador, os mesmos dados",
-    "cta.download": "Descarregar", "cta.android": "Descarregar para Android", "cta.demo": "Pedir uma demonstração", "cta.whatsapp": "Escrever no WhatsApp",
-    "hero.eyebrow": "Gestão de arrendamentos para agências e proprietários",
-    "hero.title": "Cada renda, do recebimento <em>ao recibo</em>.",
-    "hero.lead": "O Immo recebe, envia o recibo por WhatsApp, cobra os atrasos três vezes por dia e reconcilia os seus extratos Mobile Money. No telemóvel e no computador, na sua língua e na sua moeda.",
-    "proof.free": "Gratuito", "proof.langs": "5 línguas, todas as moedas", "proof.offline": "Funciona sem ligação",
-    "mock.hello": "Olá,", "mock.collected": "Recebido este mês", "mock.late": "Em atraso", "mock.cash": "Numerário", "mock.transfer": "Transferência",
-    "mock.toastTitle": "Pagamentos em atraso (3)", "mock.toastBody": "Total por pagar: 320 000 FCFA. Toque para ver o detalhe.",
-    "mock.paid": "Pago", "mock.receipt": "Recibo de renda", "mock.period": "Setembro 2026",
-    "rails.label": "Receba como os seus inquilinos pagam:", "rails.bank": "Transferência bancária", "rails.cheque": "Cheque",
-    "features.eyebrow": "Funcionalidades", "features.title": "Todo o ciclo da renda, sem folhas de cálculo nem cadernos",
-    "features.lead": "Concebido com gestores que recebem todos os dias, para agências e para proprietários que gerem eles próprios.",
-    "f1.t": "Recebimento e recibo em 30 segundos", "f1.d": "Escolha o inquilino, o valor e o meio de pagamento: o recibo PDF fica pronto, com um código QR que prova a sua autenticidade. Pagamento parcial: é emitida uma fatura do valor em falta.",
-    "f2.t": "Lembretes automáticos, três vezes por dia", "f2.d": "Às 8h, 13h e 18h, um único resumo: inquilinos em atraso, valores, dias de atraso e vencimentos próximos. Um toque abre o detalhe, outro envia o lembrete por WhatsApp ou SMS.",
-    "f3.t": "Reconciliação de extratos", "f3.d": "Importe um extrato MTN MoMo, Orange Money ou bancário: cada valor recebido é ligado ao seu inquilino e ao seu recibo. Os pagamentos esquecidos aparecem a laranja.",
-    "f4.t": "Imóveis, unidades e ocupação", "f4.d": "Prédios, apartamentos, estúdios, lojas: calendário de ocupação, unidades livres, anúncios para partilhar e lista de espera de candidatos.",
-    "f5.t": "Pagamentos e dívidas, mês a mês", "f5.d": "Devido, pago, atraso ou adiantamento acumulados, com a curva de evolução por imóvel e para toda a agência. Exportável em PDF.",
-    "f6.t": "Pré-avisos e interpelações", "f6.d": "Documentos prontos a assinar, adaptados ao país: OHADA, Código Civil, arrendamento habitacional ou comercial. Prazos calculados e acompanhamento da data de receção.",
-    "f7.t": "Equipa e proprietários", "f7.d": "Administrador, gestor, contabilista, agente: cada um vê o que lhe diz respeito. Extratos dos proprietários, comissões e pagamentos.",
-    "f8.t": "Em qualquer lugar, na sua língua", "f8.d": "Francês, inglês, espanhol, português e árabe. Escolha o país: a moeda, os formatos de data e o quadro jurídico acompanham.",
-    "how.eyebrow": "Como funciona", "how.title": "Operacional no próprio dia",
-    "s1.t": "Crie a sua agência", "s1.d": "Escolha o país: moeda, língua e fuso horário configuram-se sozinhos.",
-    "s2.t": "Adicione imóveis e inquilinos", "s2.d": "Unidades, rendas, encargos, contratos e documentos de identificação, no mesmo sítio.",
-    "s3.t": "Receba", "s3.d": "O recibo segue por WhatsApp ou e-mail, com a sua assinatura e o seu carimbo.",
-    "s4.t": "Deixe o Immo cobrar", "s4.d": "Os atrasos aparecem sozinhos; age com um toque.",
-    "docs.eyebrow": "Documentos", "docs.title": "Documentos que os seus inquilinos levam a sério",
-    "docs.lead": "Cada documento tem o seu logótipo, a sua assinatura e o seu carimbo. O código QR leva a uma página de verificação: um recibo falsificado é detetado.",
-    "d1.t": "Recibos e faturas", "d1.d": "Recibo do valor pago, fatura do valor em falta.",
-    "d2.t": "Interpelações, pré-avisos, denúncias", "d2.d": "Numa só página, com as referências jurídicas do país.",
-    "d3.t": "Históricos e relatórios", "d3.d": "Histórico de um inquilino, atrasos, relatório mensal, extrato do proprietário.",
-    "paper.tenant": "Inquilino", "paper.unit": "Imóvel", "paper.rent": "Renda setembro 2026", "paper.charges": "Encargos (água, segurança)", "paper.total": "Total pago",
-    "paper.verify": "Leia para verificar a autenticidade deste documento.", "paper.sign": "Assinatura e carimbo",
-    "sec.eyebrow": "Segurança", "sec.title": "As rendas são dinheiro. O Immo protege-as como tal.",
-    "sec.lead": "Cada regra é verificada pelo servidor, não só pela aplicação: uma palavra-passe roubada ou uma aplicação modificada não bastam.",
-    "sec1.t": "Agências isoladas", "sec1.d": "Nenhuma agência pode ver os dados de outra.",
-    "sec2.t": "Autenticação de dois fatores", "sec2.d": "Código de 6 dígitos em cada início de sessão, obrigatório para as contas que gerem dinheiro.",
-    "sec3.t": "Pagamentos que não se apagam", "sec3.d": "Um erro anula-se com um motivo, não se apaga.",
-    "sec4.t": "Registo de atividade", "sec4.d": "Quem recebeu, alterou ou anulou o quê, e quando.",
-    "sec5.t": "Proteção antirrobô", "sec5.d": "Registo e início de sessão protegidos contra ataques automatizados.",
-    "sec6.t": "Bloqueio do telemóvel", "sec6.d": "Código PIN ou impressão digital ao abrir o Immo.",
-    "price.eyebrow": "Preço", "price.title": "Gratuito. Todas as funcionalidades incluídas.",
-    "price.lead": "Sem limite de imóveis, inquilinos ou membros da equipa. Sem cartão bancário.",
-    "price.amount": "Gratuito",
-    "pc1": "Recibos, faturas e documentos jurídicos", "pc2": "Lembretes, reconciliação de extratos, relatórios", "pc3": "Equipa, proprietários, várias agências", "pc4": "Modo sem ligação e 5 línguas",
-    "faq.eyebrow": "Perguntas frequentes", "faq.title": "Antes de começar",
-    "q1": "Em que aparelhos funciona o Immo?", "a1": "Em telemóveis Android e no navegador de qualquer computador. A mesma conta e os mesmos dados: o que faz num aparece logo no outro.",
-    "q2": "É preciso ligação à internet permanente?", "a2": "Não. As fichas dos inquilinos continuam disponíveis e os pagamentos registam-se sem ligação; são enviados assim que a rede volta.",
-    "q3": "Os meus inquilinos têm de instalar o Immo?", "a3": "Não. Recebem os recibos e lembretes por WhatsApp, SMS ou e-mail.",
-    "q4": "O Immo funciona fora dos Camarões?", "a4": "Sim. Ao criar a agência, o país escolhido define a moeda, os formatos e o quadro jurídico dos documentos.",
-    "q5": "Posso gerir várias agências?", "a5": "Sim. Uma mesma conta pode pertencer a várias agências e passar de uma para outra.",
-    "contact.eyebrow": "Contacto", "contact.title": "Uma demonstração de 15 minutos, no seu telemóvel",
-    "contact.lead": "Escreva-nos: instalamos o Immo consigo e criamos a sua agência em conjunto.",
-    "contact.email": "E-mail", "contact.whatsapp": "WhatsApp", "contact.city": "Cidade", "contact.copy": "Copiar", "contact.copied": "Copiado",
-    "contact.soon": "Contactos disponíveis em breve.",
-    "demo.message": "Olá, gostaria de uma demonstração do Immo.",
-    "foot.tag": "Uma gestão simples, uma tranquilidade garantida.", "foot.theme": "Tema claro / escuro"
-  },
-  ar: {
-    "nav.features": "المزايا", "nav.how": "كيف يعمل", "nav.security": "الأمان", "nav.price": "السعر", "nav.contact": "اتصل بنا",
-    "cta.web": "افتح Immo على الحاسوب", "cta.login": "تسجيل الدخول", "cta.start": "ابدأ مجانًا", "proof.sync": "الهاتف والحاسوب، البيانات نفسها",
-    "cta.download": "تنزيل", "cta.android": "تنزيل لأندرويد", "cta.demo": "طلب عرض توضيحي", "cta.whatsapp": "راسلنا عبر واتساب",
-    "hero.eyebrow": "إدارة الإيجارات للوكالات والملاك",
-    "hero.title": "كل إيجار، من التحصيل <em>إلى الإيصال</em>.",
-    "hero.lead": "يسجّل Immo المدفوعات، ويرسل الإيصال عبر واتساب، ويذكّر المتأخرين ثلاث مرات يوميًا، ويطابق كشوف Mobile Money. على هاتفك وحاسوبك، بلغتك وعملتك.",
-    "proof.free": "مجاني", "proof.langs": "5 لغات وجميع العملات", "proof.offline": "يعمل دون اتصال",
-    "mock.hello": "مرحبًا،", "mock.collected": "المحصّل هذا الشهر", "mock.late": "المتأخرات", "mock.cash": "نقدًا", "mock.transfer": "تحويل",
-    "mock.toastTitle": "مدفوعات متأخرة (3)", "mock.toastBody": "إجمالي غير المدفوع: 320 000 FCFA. المس لعرض التفاصيل.",
-    "mock.paid": "مدفوع", "mock.receipt": "إيصال إيجار", "mock.period": "سبتمبر 2026",
-    "rails.label": "حصّل كما يدفع مستأجروك:", "rails.bank": "تحويل بنكي", "rails.cheque": "شيك",
-    "features.eyebrow": "المزايا", "features.title": "دورة الإيجار كاملة، دون جداول أو دفاتر",
-    "features.lead": "صُمّم مع مديرين يحصّلون الإيجارات يوميًا، للوكالات وللملاك الذين يديرون عقاراتهم بأنفسهم.",
-    "f1.t": "تحصيل وإيصال في 30 ثانية", "f1.d": "اختر المستأجر والمبلغ وطريقة الدفع: يصبح إيصال PDF جاهزًا، مع رمز QR يثبت أصالته. عند الدفع الجزئي تُصدر فاتورة بالمبلغ المتبقي.",
-    "f2.t": "تذكيرات تلقائية ثلاث مرات يوميًا", "f2.d": "في الساعة 8 و13 و18، ملخص واحد: المستأجرون المتأخرون والمبالغ وأيام التأخر والاستحقاقات القريبة. لمسة تفتح التفاصيل، وأخرى ترسل التذكير عبر واتساب أو الرسائل القصيرة.",
-    "f3.t": "مطابقة الكشوف", "f3.d": "استورد كشف MTN MoMo أو Orange Money أو كشفًا بنكيًا: يُربط كل مبلغ مستلم بمستأجره وإيصاله. تظهر المدفوعات غير المسجلة باللون البرتقالي.",
-    "f4.t": "العقارات والوحدات والإشغال", "f4.d": "مبانٍ وشقق واستوديوهات ومحلات: تقويم الإشغال والوحدات الشاغرة وإعلانات للمشاركة وقائمة انتظار للمتقدمين.",
-    "f5.t": "المدفوعات والديون شهرًا بشهر", "f5.d": "المستحق والمدفوع والتأخر أو التقدم التراكمي، مع منحنى التطور لكل عقار وللوكالة كلها. قابل للتصدير بصيغة PDF.",
-    "f6.t": "الإشعارات والإنذارات", "f6.d": "مستندات جاهزة للتوقيع وفق بلدك: OHADA، القانون المدني، إيجار سكني أو تجاري. آجال محسوبة ومتابعة تاريخ الاستلام.",
-    "f7.t": "الفريق والملاك", "f7.d": "مسؤول ومدير ومحاسب ووكيل: كلٌّ يرى ما يخصه. كشوف الملاك والعمولات والتحويلات.",
-    "f8.t": "في كل مكان وبلغتك", "f8.d": "الفرنسية والإنجليزية والإسبانية والبرتغالية والعربية. اختر البلد: تتبعه العملة وصيغ التواريخ والإطار القانوني.",
-    "how.eyebrow": "كيف يعمل", "how.title": "جاهز للعمل في اليوم نفسه",
-    "s1.t": "أنشئ وكالتك", "s1.d": "اختر البلد: تُضبط العملة واللغة والمنطقة الزمنية تلقائيًا.",
-    "s2.t": "أضف العقارات والمستأجرين", "s2.d": "الوحدات والإيجارات والرسوم والعقود ووثائق الهوية في مكان واحد.",
-    "s3.t": "حصّل الإيجار", "s3.d": "يُرسل الإيصال عبر واتساب أو البريد الإلكتروني، مع توقيعك وختمك.",
-    "s4.t": "دع Immo يذكّر المتأخرين", "s4.d": "تظهر المتأخرات تلقائيًا؛ وتتصرف بلمسة واحدة.",
-    "docs.eyebrow": "المستندات", "docs.title": "مستندات يأخذها مستأجروك على محمل الجد",
-    "docs.lead": "يحمل كل مستند شعارك وتوقيعك وختمك. يقود رمز QR إلى صفحة تحقق: يُكشف أي إيصال مزوّر.",
-    "d1.t": "الإيصالات والفواتير", "d1.d": "إيصال بالمبلغ المدفوع، وفاتورة بالمبلغ المتبقي.",
-    "d2.t": "الإنذارات والإشعارات وإنهاء العقود", "d2.d": "في صفحة واحدة، مع المراجع القانونية للبلد.",
-    "d3.t": "السجلات والتقارير", "d3.d": "سجل المستأجر، والمتأخرات، والتقرير الشهري، وكشف المالك.",
-    "paper.tenant": "المستأجر", "paper.unit": "العقار", "paper.rent": "إيجار سبتمبر 2026", "paper.charges": "الرسوم (الماء، الحراسة)", "paper.total": "إجمالي المدفوع",
-    "paper.verify": "امسح الرمز للتحقق من أصالة هذا المستند.", "paper.sign": "التوقيع والختم",
-    "sec.eyebrow": "الأمان", "sec.title": "الإيجارات أموال. وImmo يحميها على هذا الأساس.",
-    "sec.lead": "يتحقق الخادم من كل قاعدة، لا التطبيق وحده: لا تكفي كلمة مرور مسروقة أو تطبيق معدّل.",
-    "sec1.t": "وكالات معزولة", "sec1.d": "لا يمكن لأي وكالة رؤية بيانات وكالة أخرى.",
-    "sec2.t": "المصادقة الثنائية", "sec2.d": "رمز من 6 أرقام عند كل تسجيل دخول، إلزامي للحسابات التي تدير الأموال.",
-    "sec3.t": "مدفوعات لا تُمحى", "sec3.d": "يُلغى الخطأ مع ذكر السبب، ولا يُحذف.",
-    "sec4.t": "سجل النشاط", "sec4.d": "من حصّل أو عدّل أو ألغى ماذا، ومتى.",
-    "sec5.t": "حماية من الروبوتات", "sec5.d": "التسجيل وتسجيل الدخول محميان من الهجمات الآلية.",
-    "sec6.t": "قفل الهاتف", "sec6.d": "رمز PIN أو بصمة الإصبع عند فتح Immo.",
-    "price.eyebrow": "السعر", "price.title": "مجاني. جميع المزايا مشمولة.",
-    "price.lead": "لا حد لعدد العقارات أو المستأجرين أو أعضاء الفريق. لا حاجة إلى بطاقة بنكية.",
-    "price.amount": "مجاني",
-    "pc1": "الإيصالات والفواتير والمستندات القانونية", "pc2": "التذكيرات ومطابقة الكشوف والتقارير", "pc3": "الفريق والملاك وعدة وكالات", "pc4": "الوضع دون اتصال و5 لغات",
-    "faq.eyebrow": "أسئلة شائعة", "faq.title": "قبل أن تبدأ",
-    "q1": "على أي أجهزة يعمل Immo؟", "a1": "على هواتف أندرويد وفي متصفح أي حاسوب. الحساب نفسه والبيانات نفسها: ما تفعله على أحدهما يظهر فورًا على الآخر.",
-    "q2": "هل أحتاج إلى اتصال دائم بالإنترنت؟", "a2": "لا. تبقى ملفات المستأجرين متاحة وتُسجَّل المدفوعات دون اتصال، ثم تُرسل فور عودة الشبكة.",
-    "q3": "هل يجب على مستأجريّ تثبيت Immo؟", "a3": "لا. يتلقون إيصالاتهم وتذكيراتهم عبر واتساب أو الرسائل القصيرة أو البريد الإلكتروني.",
-    "q4": "هل يعمل Immo خارج الكاميرون؟", "a4": "نعم. عند إنشاء الوكالة، يحدد البلد المختار العملة والصيغ والإطار القانوني للمستندات.",
-    "q5": "هل يمكنني إدارة عدة وكالات؟", "a5": "نعم. يمكن للحساب نفسه الانتماء إلى عدة وكالات والتنقل بينها.",
-    "contact.eyebrow": "اتصل بنا", "contact.title": "عرض توضيحي لمدة 15 دقيقة على هاتفك",
-    "contact.lead": "راسلنا: نثبّت Immo معك وننشئ وكالتك معًا.",
-    "contact.email": "البريد الإلكتروني", "contact.whatsapp": "واتساب", "contact.city": "المدينة", "contact.copy": "نسخ", "contact.copied": "تم النسخ",
-    "contact.soon": "ستتوفر بيانات الاتصال قريبًا.",
-    "demo.message": "مرحبًا، أرغب في عرض توضيحي لـ Immo.",
-    "foot.tag": "إدارة بسيطة وراحة بال مضمونة.", "foot.theme": "الوضع الفاتح / الداكن"
-  }
-};
-
-const store = {
-  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
-  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* stockage indisponible */ } }
-};
-
-let lang = "fr";
-
-function t(key) { return (I18N[lang] && I18N[lang][key]) || I18N.fr[key] || key; }
-
-function applyLang(next) {
-  lang = I18N[next] ? next : "fr";
-  const root = document.documentElement;
-  root.lang = lang;
-  root.dir = lang === "ar" ? "rtl" : "ltr";
-  document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
-  document.querySelectorAll("[data-i18n-html]").forEach((el) => { el.innerHTML = t(el.dataset.i18nHtml); });
-  document.getElementById("lang").value = lang;
-  renderContact();
-  wireLinks();
-  store.set("immo-site-lang", lang);
-}
-
-/* Liens : téléchargement et démonstration (WhatsApp si renseigné). */
-function wireLinks() {
-  document.querySelectorAll(".js-app").forEach((a) => { a.href = CONFIG.APP_URL; });
-  document.querySelectorAll(".js-download").forEach((a) => {
-    if (CONFIG.DOWNLOAD_URL) { a.href = CONFIG.DOWNLOAD_URL; a.target = "_blank"; a.rel = "noopener"; }
-    else { a.href = "#contact"; a.removeAttribute("target"); }
-  });
-  document.querySelectorAll(".js-demo").forEach((a) => {
-    if (CONFIG.whatsapp) {
-      a.href = "https://wa.me/" + CONFIG.whatsapp.replace(/\D/g, "") + "?text=" + encodeURIComponent(t("demo.message"));
-      a.target = "_blank"; a.rel = "noopener";
-    } else { a.href = "#contact"; a.removeAttribute("target"); }
-  });
-}
-
-/* Coordonnées affichées en texte sélectionnable, avec bouton Copier. */
-function renderContact() {
-  const card = document.getElementById("contact-card");
-  const lines = [
-    ["contact.whatsapp", CONFIG.whatsappDisplay || (CONFIG.whatsapp ? "+" + CONFIG.whatsapp.replace(/\D/g, "") : "")],
-    ["contact.email", CONFIG.email],
-    ["contact.city", CONFIG.city]
-  ].filter(([, v]) => v);
-  card.innerHTML = "";
-  if (!lines.length) {
-    const p = document.createElement("p");
-    p.style.color = "var(--muted)";
-    p.textContent = t("contact.soon");
-    card.appendChild(p);
-    return;
-  }
-  lines.forEach(([label, value]) => {
-    const row = document.createElement("div");
-    row.className = "contact-line";
-    const small = document.createElement("small");
-    small.textContent = t(label);
-    const val = document.createElement("div");
-    val.className = "val";
-    const span = document.createElement("span");
-    span.textContent = value;
-    val.appendChild(span);
-    if (label !== "contact.city") {
-      const btn = document.createElement("button");
-      btn.type = "button"; btn.className = "copy"; btn.textContent = t("contact.copy");
-      btn.addEventListener("click", () => {
-        const done = () => { btn.textContent = t("contact.copied"); setTimeout(() => { btn.textContent = t("contact.copy"); }, 1600); };
-        try {
-          navigator.clipboard.writeText(value).then(done, () => selectText(span));
-        } catch (e) { selectText(span); }
-      });
-      val.appendChild(btn);
-    }
-    row.append(small, val);
-    card.appendChild(row);
-  });
-  if (CONFIG.company) {
-    const c = document.createElement("p");
-    c.style.color = "var(--muted)"; c.style.fontSize = ".9rem";
-    c.textContent = CONFIG.company;
-    card.appendChild(c);
-  }
-}
-
-function selectText(el) {
-  const r = document.createRange(); r.selectNodeContents(el);
-  const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-}
-
-/* Motifs QR décoratifs (non lisibles) des documents d'exemple. */
-function drawQr(canvas) {
-  const ctx = canvas.getContext("2d");
-  const n = 25, size = canvas.width, cell = size / n;
-  let seed = Number(canvas.dataset.seed || 1);
-  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-  ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, size, size);
-  ctx.fillStyle = "#0f2620";
-  const finder = (x, y) => {
-    ctx.fillRect(x * cell, y * cell, 7 * cell, 7 * cell);
-    ctx.fillStyle = "#ffffff"; ctx.fillRect((x + 1) * cell, (y + 1) * cell, 5 * cell, 5 * cell);
-    ctx.fillStyle = "#0f2620"; ctx.fillRect((x + 2) * cell, (y + 2) * cell, 3 * cell, 3 * cell);
-  };
-  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
-    const inFinder = (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
-    if (!inFinder && rnd() > .52) ctx.fillRect(x * cell, y * cell, Math.ceil(cell), Math.ceil(cell));
-  }
-  finder(0, 0); finder(n - 7, 0); finder(0, n - 7);
-}
-
-document.querySelectorAll("canvas.qr").forEach(drawQr);
-document.getElementById("year").textContent = String(new Date().getFullYear());
-
-/* Langue : choix mémorisé, sinon celle du navigateur. */
-const saved = store.get("immo-site-lang");
-const browser = (navigator.language || "fr").slice(0, 2);
-applyLang(saved || (I18N[browser] ? browser : "fr"));
-document.getElementById("lang").addEventListener("change", (e) => applyLang(e.target.value));
-
-/* Menu sur téléphone. */
-const nav = document.getElementById("nav");
-const menuBtn = document.getElementById("menu-btn");
-menuBtn.addEventListener("click", () => {
-  const open = nav.classList.toggle("open");
-  menuBtn.setAttribute("aria-expanded", String(open));
-});
-nav.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }));
-
-/* Thème clair / sombre (sinon celui du système). */
-const savedTheme = store.get("immo-site-theme");
-if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-document.getElementById("theme-btn").addEventListener("click", () => {
-  const root = document.documentElement;
-  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-  root.dataset.theme = dark ? "light" : "dark";
-  store.set("immo-site-theme", root.dataset.theme);
-});
-</script>
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
 </body>
 </html>
