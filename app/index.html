@@ -11,7 +11,8 @@
     Cloudflare Turnstile seulement, données vers Supabase uniquement, aucune
     ressource d'un autre site. 'wasm-unsafe-eval' : moteur de rendu Flutter
     (CanvasKit, WebAssembly). fonts.gstatic.com : polices de secours (arabe…).
-    Firebase : notifications Web.
+    Firebase : notifications Web. blob: (frame/object) : aperçu des PDF dans la
+    visionneuse du navigateur (documents générés par l'application).
   -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
@@ -22,7 +23,7 @@
     connect-src 'self' https://*.supabase.co wss://*.supabase.co https://fonts.gstatic.com https://www.gstatic.com https://challenges.cloudflare.com https://*.googleapis.com;
     frame-src 'self' blob: https://challenges.cloudflare.com;
     worker-src 'self' blob:;
-    object-src 'none';
+    object-src 'self' blob:;
     base-uri 'self';
     form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
