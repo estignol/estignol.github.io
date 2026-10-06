@@ -67,7 +67,8 @@ window.IMMO_I18N = {
     "contact.whatsapp": "WhatsApp", "contact.email": "E-mail", "contact.copy": "Copier", "contact.copied": "Copié",
     "demo.message": "Bonjour, je souhaite une démonstration d'Immo.",
     "foot.tag": "Une gestion simple, une tranquillité assurée.", "foot.rights": "Tous droits réservés.",
-    "foot.product": "Produit", "foot.contact": "Contact"
+    "foot.product": "Produit", "foot.contact": "Contact",
+    "foot.privacy": "Politique de confidentialité", "foot.deletion": "Supprimer mon compte"
   },
   en: {
     "meta.title": "Immo — Professional property management, on phone and computer",
@@ -136,7 +137,8 @@ window.IMMO_I18N = {
     "contact.whatsapp": "WhatsApp", "contact.email": "Email", "contact.copy": "Copy", "contact.copied": "Copied",
     "demo.message": "Hello, I would like a demo of Immo.",
     "foot.tag": "Simple management, peace of mind.", "foot.rights": "All rights reserved.",
-    "foot.product": "Product", "foot.contact": "Contact"
+    "foot.product": "Product", "foot.contact": "Contact",
+    "foot.privacy": "Privacy policy", "foot.deletion": "Delete my account"
   },
   es: {
     "meta.title": "Immo — Gestión profesional de alquileres, en el teléfono y el ordenador",
@@ -205,7 +207,8 @@ window.IMMO_I18N = {
     "contact.whatsapp": "WhatsApp", "contact.email": "Correo", "contact.copy": "Copiar", "contact.copied": "Copiado",
     "demo.message": "Hola, me gustaría una demostración de Immo.",
     "foot.tag": "Una gestión sencilla, una tranquilidad asegurada.", "foot.rights": "Todos los derechos reservados.",
-    "foot.product": "Producto", "foot.contact": "Contacto"
+    "foot.product": "Producto", "foot.contact": "Contacto",
+    "foot.privacy": "Política de privacidad", "foot.deletion": "Eliminar mi cuenta"
   },
   pt: {
     "meta.title": "Immo — Gestão profissional de arrendamentos, no telemóvel e no computador",
@@ -274,7 +277,8 @@ window.IMMO_I18N = {
     "contact.whatsapp": "WhatsApp", "contact.email": "E-mail", "contact.copy": "Copiar", "contact.copied": "Copiado",
     "demo.message": "Olá, gostaria de uma demonstração do Immo.",
     "foot.tag": "Uma gestão simples, uma tranquilidade garantida.", "foot.rights": "Todos os direitos reservados.",
-    "foot.product": "Produto", "foot.contact": "Contacto"
+    "foot.product": "Produto", "foot.contact": "Contacto",
+    "foot.privacy": "Política de privacidade", "foot.deletion": "Eliminar a minha conta"
   },
   ar: {
     "meta.title": "Immo — إدارة احترافية للإيجارات على الهاتف والحاسوب",
@@ -343,6 +347,7 @@ window.IMMO_I18N = {
     "contact.whatsapp": "واتساب", "contact.email": "البريد الإلكتروني", "contact.copy": "نسخ", "contact.copied": "تم النسخ",
     "demo.message": "مرحبًا، أرغب في عرض توضيحي لـ Immo.",
     "foot.tag": "إدارة بسيطة وراحة بال مضمونة.", "foot.rights": "جميع الحقوق محفوظة.",
-    "foot.product": "المنتج", "foot.contact": "اتصل بنا"
+    "foot.product": "المنتج", "foot.contact": "اتصل بنا",
+    "foot.privacy": "سياسة الخصوصية", "foot.deletion": "حذف حسابي"
   }
 };
