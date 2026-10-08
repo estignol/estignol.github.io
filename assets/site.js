@@ -4,7 +4,7 @@
 
   /* Coordonnées et liens : à modifier ici, un seul endroit. */
   var CONFIG = {
-    email: "datacraf26@gmail.com",
+    email: "datacraft26@gmail.com",
     whatsapp: "237678904061",          // format international, sans « + »
     whatsappDisplay: "+237 678 90 40 61",
     DOWNLOAD_URL: "",                  // lien direct de l'APK Android ; vide = section Contact
