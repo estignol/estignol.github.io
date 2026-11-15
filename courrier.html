@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://rwsiynbayakukqxlrlkj.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<title>Courrier – Immo</title>
+<link rel="icon" href="assets/immo-64.png">
+<link rel="stylesheet" href="assets/courrier.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="brand">
+    <img src="assets/immo-64.png" alt="" width="36" height="36">
+    <span id="org">Immo</span>
+  </header>
+
+  <section id="loading" class="card center">
+    <div class="spinner" aria-hidden="true"></div>
+    <p data-t="loading">Chargement du courrier…</p>
+  </section>
+
+  <section id="error" class="card center" hidden>
+    <div class="badge bad" aria-hidden="true">!</div>
+    <h1 id="error-title" data-t="invalidTitle">Lien invalide ou expiré</h1>
+    <p id="error-text" data-t="invalidText">Ce lien n'est plus valable. Contactez l'expéditeur du courrier.</p>
+  </section>
+
+  <section id="letter" class="card" hidden>
+    <p class="hello" id="hello"></p>
+    <p class="muted" id="intro"></p>
+    <h1 id="title"></h1>
+    <p class="motive" id="motive" hidden></p>
+    <dl class="facts">
+      <div><dt data-t="place">Logement</dt><dd id="place"></dd></div>
+      <div><dt data-t="date">Date du courrier</dt><dd id="date"></dd></div>
+      <div><dt id="effective-label"></dt><dd id="effective"></dd></div>
+      <div id="amount-row" hidden><dt data-t="amount">Montant dû</dt><dd id="amount"></dd></div>
+    </dl>
+    <a id="pdf" class="btn ghost" href="#" target="_blank" rel="noopener noreferrer" data-t="open">Ouvrir le document (PDF)</a>
+
+    <div id="confirm-box" class="confirm">
+      <p data-t="confirmText">En confirmant, vous attestez avoir reçu ce courrier. La date et l'heure de votre confirmation sont enregistrées.</p>
+      <button id="confirm" class="btn" type="button" data-t="confirm">Je confirme avoir reçu ce courrier</button>
+      <p id="confirm-error" class="error" hidden></p>
+    </div>
+
+    <div id="done" class="done" hidden>
+      <div class="badge ok" aria-hidden="true">✓</div>
+      <p id="done-text"></p>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p id="contact"></p>
+    <p class="muted" data-t="personal">Ce lien vous est personnel : merci de ne pas le transférer.</p>
+  </footer>
+</main>
+<script src="assets/courrier.js"></script>
+</body>
+</html>
