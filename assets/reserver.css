@@ -58,7 +58,7 @@ h3 { font-size: 15px; margin: 18px 0 6px; color: var(--muted); }
 .unit .price { color: var(--green); font-weight: 800; margin-top: 6px; }
 
 .photos { display: flex; gap: 8px; overflow-x: auto; margin: -4px 0 12px; scroll-snap-type: x mandatory; }
-.photos img { height: 220px; border-radius: 12px; scroll-snap-align: start; object-fit: cover; flex: 0 0 auto; max-width: 92%; }
+.photos img, .photos video { height: 220px; border-radius: 12px; scroll-snap-align: start; object-fit: cover; flex: 0 0 auto; max-width: 92%; background: #0b3b30; }
 
 .rates { display: flex; flex-wrap: wrap; gap: 8px; }
 .rate { background: #eaf4ef; color: var(--green); border-radius: 20px; padding: 4px 12px; font-size: 14px; font-weight: 600; }

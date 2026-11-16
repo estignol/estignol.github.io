@@ -11,6 +11,7 @@
 
   var T = {
     fr: {
+      videos: 'vidéo(s)',
       loading: 'Chargement…', notFoundTitle: 'Page de réservation introuvable',
       notFoundText: "Ce lien n'est pas valable ou la réservation en ligne est fermée.",
       chooseTitle: 'Choisissez votre logement', noUnits: 'Aucun logement disponible à la réservation pour le moment.',
@@ -35,6 +36,7 @@
       whatsappText: 'Bonjour, je viens de faire la demande de réservation {ref}.'
     },
     en: {
+      videos: 'video(s)',
       loading: 'Loading…', notFoundTitle: 'Booking page not found',
       notFoundText: 'This link is not valid or online booking is closed.',
       chooseTitle: 'Choose your accommodation', noUnits: 'No accommodation available for booking at the moment.',
@@ -59,6 +61,7 @@
       whatsappText: 'Hello, I have just made booking request {ref}.'
     },
     es: {
+      videos: 'vídeo(s)',
       loading: 'Cargando…', notFoundTitle: 'Página de reservas no encontrada',
       notFoundText: 'Este enlace no es válido o la reserva en línea está cerrada.',
       chooseTitle: 'Elija su alojamiento', noUnits: 'No hay alojamientos disponibles para reservar por el momento.',
@@ -83,6 +86,7 @@
       whatsappText: 'Hola, acabo de hacer la solicitud de reserva {ref}.'
     },
     pt: {
+      videos: 'vídeo(s)',
       loading: 'A carregar…', notFoundTitle: 'Página de reservas não encontrada',
       notFoundText: 'Esta ligação não é válida ou a reserva online está fechada.',
       chooseTitle: 'Escolha o seu alojamento', noUnits: 'Nenhum alojamento disponível para reserva de momento.',
@@ -107,6 +111,7 @@
       whatsappText: 'Olá, acabei de fazer o pedido de reserva {ref}.'
     },
     ar: {
+      videos: 'فيديو',
       loading: 'جارٍ التحميل…', notFoundTitle: 'صفحة الحجز غير موجودة',
       notFoundText: 'هذا الرابط غير صالح أو أن الحجز عبر الإنترنت مغلق.',
       chooseTitle: 'اختر مسكنك', noUnits: 'لا توجد مساكن متاحة للحجز حاليًا.',
@@ -201,12 +206,16 @@
     (catalog.units || []).forEach(function (u) {
       var card = el('button', 'unit');
       card.type = 'button';
-      if (u.photos && u.photos[0]) { var img = el('img'); img.src = u.photos[0]; img.alt = ''; img.loading = 'lazy'; card.appendChild(img); }
+      var cover = (u.media || []).filter(function (m) { return m.kind === 'photo'; })[0];
+      var coverUrl = cover ? cover.url : (u.photos && u.photos[0]);
+      var videos = (u.media || []).filter(function (m) { return m.kind === 'video'; }).length;
+      if (coverUrl) { var img = el('img'); img.src = coverUrl; img.alt = ''; img.loading = 'lazy'; card.appendChild(img); }
       else card.appendChild(el('div', 'ph'));
       var body = el('div', 'body');
       body.appendChild(el('div', 'title', u.title));
       body.appendChild(el('div', 'muted small', [u.city, fill(t('guests'), { n: u.max_guests })].filter(Boolean).join(' · ')));
       body.appendChild(el('div', 'price', minRate(u)));
+      if (videos) body.appendChild(el('div', 'muted small', '▶ ' + videos + ' ' + t('videos')));
       card.appendChild(body);
       card.addEventListener('click', function () { openUnit(u); });
       box.appendChild(card);
@@ -220,7 +229,17 @@
     $('b-title').textContent = u.title;
     $('b-desc').textContent = u.description || '';
     var ph = $('b-photos'); ph.innerHTML = '';
-    (u.photos || []).forEach(function (src) { var i = el('img'); i.src = src; i.alt = ''; ph.appendChild(i); });
+    // Galerie : photos puis vidéos des lieux (lecture dans la page).
+    (u.media || (u.photos || []).map(function (p) { return { kind: 'photo', url: p }; })).forEach(function (m) {
+      if (m.kind === 'video') {
+        var v = el('video');
+        v.src = m.url; v.controls = true; v.preload = 'metadata'; v.playsInline = true;
+        ph.appendChild(v);
+      } else {
+        var i = el('img'); i.src = m.url; i.alt = ''; i.loading = 'lazy'; ph.appendChild(i);
+      }
+    });
+    ph.hidden = !ph.children.length;
     var rates = $('b-rates'); rates.innerHTML = '';
     [['hourly_rate', 'perHour'], ['nightly_rate', 'perNight'], ['weekend_rate', 'perNight'], ['weekly_rate', 'perWeek'], ['monthly_rate', 'perMonth']]
       .forEach(function (r) { if (u[r[0]]) rates.appendChild(el('span', 'rate', money(u[r[0]]) + ' ' + t(r[1]))); });
