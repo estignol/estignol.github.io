@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://rwsiynbayakukqxlrlkj.supabase.co; connect-src https://rwsiynbayakukqxlrlkj.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Réservation – Immo</title>
+<link rel="icon" href="assets/immo-64.png">
+<link rel="stylesheet" href="assets/reserver.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <img src="assets/immo-64.png" alt="" width="34" height="34">
+    <div>
+      <div id="org" class="org">Immo</div>
+      <div id="org-sub" class="muted"></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="loading" class="center pad">
+    <div class="spinner" aria-hidden="true"></div>
+    <p data-t="loading">Chargement…</p>
+  </section>
+
+  <section id="error" class="card center pad" hidden>
+    <h1 data-t="notFoundTitle">Page de réservation introuvable</h1>
+    <p data-t="notFoundText">Ce lien n'est pas valable ou la réservation en ligne est fermée.</p>
+  </section>
+
+  <section id="catalog" hidden>
+    <p id="message" class="message" hidden></p>
+    <h1 data-t="chooseTitle">Choisissez votre logement</h1>
+    <div id="units" class="grid"></div>
+    <p id="empty" class="muted center" hidden data-t="noUnits">Aucun logement disponible à la réservation pour le moment.</p>
+  </section>
+
+  <section id="booking" hidden>
+    <button id="back" class="link" type="button" data-t="back">← Tous les logements</button>
+    <div class="card">
+      <div id="b-photos" class="photos"></div>
+      <h1 id="b-title"></h1>
+      <p id="b-desc" class="muted"></p>
+      <div id="b-rates" class="rates"></div>
+
+      <h2 data-t="when">Quand ?</h2>
+      <div id="modes" class="chips"></div>
+      <div class="row" id="row-dates">
+        <label><span data-t="arrival">Arrivée</span><input type="date" id="start-date"></label>
+        <label id="lbl-start-time"><span data-t="time">Heure</span><input type="time" id="start-time" step="900"></label>
+        <label id="lbl-end-date"><span data-t="departure">Départ</span><input type="date" id="end-date"></label>
+        <label id="lbl-hours" hidden><span data-t="hours">Durée (heures)</span><input type="number" id="hours" min="1" max="24" value="2"></label>
+      </div>
+      <div class="row">
+        <label><span data-t="adults">Adultes</span><input type="number" id="adults" min="1" max="50" value="1"></label>
+        <label><span data-t="children">Enfants</span><input type="number" id="children" min="0" max="50" value="0"></label>
+      </div>
+
+      <h3 data-t="availability">Disponibilités</h3>
+      <div class="cal-nav">
+        <button type="button" id="cal-prev" class="link" aria-label="‹">‹</button>
+        <span id="cal-title"></span>
+        <button type="button" id="cal-next" class="link" aria-label="›">›</button>
+      </div>
+      <div id="calendar" class="calendar"></div>
+      <p class="legend"><span class="dot busy"></span><span data-t="busy">Occupé</span></p>
+
+      <div id="quote" class="quote" hidden></div>
+      <p id="quote-error" class="error" hidden></p>
+
+      <h2 data-t="you">Vos coordonnées</h2>
+      <div class="row">
+        <label class="wide"><span data-t="name">Nom et prénom</span><input type="text" id="name" maxlength="120" autocomplete="name"></label>
+      </div>
+      <div class="row">
+        <label><span data-t="phone">Téléphone (WhatsApp)</span><input type="tel" id="phone" maxlength="25" autocomplete="tel"></label>
+        <label><span data-t="email">E-mail (facultatif)</span><input type="email" id="email" maxlength="254" autocomplete="email"></label>
+      </div>
+      <label class="wide"><span data-t="messageLabel">Message (facultatif)</span><textarea id="note" maxlength="500" rows="3"></textarea></label>
+      <label class="hp" aria-hidden="true">Website<input type="text" id="website" tabindex="-1" autocomplete="off"></label>
+      <button id="submit" class="btn" type="button" data-t="submit">Envoyer ma demande de réservation</button>
+      <p class="muted small" data-t="optionInfo">Votre demande est transmise à l'agence, qui la confirme rapidement. Aucun paiement n'est demandé en ligne.</p>
+      <p id="submit-error" class="error" hidden></p>
+    </div>
+  </section>
+
+  <section id="done" class="card center pad" hidden>
+    <div class="badge" aria-hidden="true">✓</div>
+    <h1 data-t="doneTitle">Demande envoyée</h1>
+    <p id="done-text"></p>
+    <a id="done-whatsapp" class="btn" href="#" target="_blank" rel="noopener noreferrer" hidden data-t="contactWhatsApp">Contacter l'agence sur WhatsApp</a>
+  </section>
+</main>
+
+<footer class="foot muted">
+  <p id="contact"></p>
+  <p>Immo</p>
+</footer>
+<script src="assets/reserver.js"></script>
+</body>
+</html>
