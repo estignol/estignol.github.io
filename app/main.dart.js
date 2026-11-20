@@ -176931,7 +176931,7 @@ case 3:if(!d||i.a==null||p.c==null){s=1
 break}m=i.a
 m.toString
 l=t.X
-k=A.ng(new A.bo7(a,"https://estignol-github-io.estignol933.workers.dev/courrier.html#"+m),A.J([B.d,!0],l,l),t.N)
+k=A.ng(new A.bo7(a,"https://immo.datacraft.trade/courrier.html#"+m),A.J([B.d,!0],l,l),t.N)
 j=A.a0(a.h(0,"tenant_phone"))
 if(j==null)j=""
 s="whatsapp"===b||"whatsapp_web"===b?5:6
@@ -180953,7 +180953,7 @@ A.btI.prototype={
 $1(a){},
 $S:36}
 A.btO.prototype={
-$0(){return A.iQ(A.dV("https://estignol-github-io.estignol933.workers.dev/confidentialite.html",0,null),B.f5,null)},
+$0(){return A.iQ(A.dV("https://immo.datacraft.trade/confidentialite.html",0,null),B.f5,null)},
 $S:0}
 A.btP.prototype={
 $0(){return A.ai(this.a,!1).bH(A.bX(new A.btG(),null,t.z))},
@@ -186666,7 +186666,7 @@ case 2:return A.o(o.at(-1),r)}})
 return A.q($async$rN,r)},
 gaRG(){var s=this.f
 s=s==null?null:s.h(0,"slug")
-return"https://estignol-github-io.estignol933.workers.dev/reserver.html#"+A.i(s==null?"":s)},
+return"https://immo.datacraft.trade/reserver.html#"+A.i(s==null?"":s)},
 v(a){var s,r,q,p,o,n,m,l,k,j,i,h,g,f=this,e=null,d="stay_mode"
 J.a($.b.h(0,B.d),!0)
 s=$.c
