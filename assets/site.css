@@ -435,3 +435,7 @@ html[lang="ar"] .c-line small { letter-spacing: 0; }
   .marquee-track { animation-duration: 70s; }
   .js [data-reveal] { transform: translateY(12px); transition-duration: .6s; }
 }
+
+/* Lien vers la boutique DataCraft */
+.foot-by { display: inline-block; margin-top: 12px; font-size: .88rem; font-weight: 500; text-decoration: none; opacity: .8; }
+.foot-by:hover { opacity: 1; text-decoration: underline; }

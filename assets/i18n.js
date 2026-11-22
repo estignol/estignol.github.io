@@ -1,6 +1,7 @@
 /* Textes du site de présentation d'Immo, en 5 langues (l'arabe s'affiche de droite à gauche). */
 window.IMMO_I18N = {
   fr: {
+    "foot.by": "Une application DataCraft — voir toutes nos applications",
     "meta.title": "Immo — La gestion locative professionnelle, sur téléphone et ordinateur",
     "nav.features": "Fonctionnalités", "nav.docs": "Documents", "nav.how": "Démarrer", "nav.security": "Sécurité", "nav.price": "Tarif", "nav.contact": "Contact",
     "cta.login": "Se connecter", "cta.start": "Commencer gratuitement", "cta.web": "Ouvrir Immo sur ordinateur", "cta.android": "Télécharger pour Android",
@@ -71,6 +72,7 @@ window.IMMO_I18N = {
     "foot.privacy": "Politique de confidentialité", "foot.deletion": "Supprimer mon compte"
   },
   en: {
+    "foot.by": "A DataCraft app — see all our apps",
     "meta.title": "Immo — Professional property management, on phone and computer",
     "nav.features": "Features", "nav.docs": "Documents", "nav.how": "Get started", "nav.security": "Security", "nav.price": "Pricing", "nav.contact": "Contact",
     "cta.login": "Sign in", "cta.start": "Start for free", "cta.web": "Open Immo on your computer", "cta.android": "Download for Android",
@@ -141,6 +143,7 @@ window.IMMO_I18N = {
     "foot.privacy": "Privacy policy", "foot.deletion": "Delete my account"
   },
   es: {
+    "foot.by": "Una aplicación DataCraft — ver todas nuestras aplicaciones",
     "meta.title": "Immo — Gestión profesional de alquileres, en el teléfono y el ordenador",
     "nav.features": "Funciones", "nav.docs": "Documentos", "nav.how": "Empezar", "nav.security": "Seguridad", "nav.price": "Precio", "nav.contact": "Contacto",
     "cta.login": "Iniciar sesión", "cta.start": "Empezar gratis", "cta.web": "Abrir Immo en el ordenador", "cta.android": "Descargar para Android",
@@ -211,6 +214,7 @@ window.IMMO_I18N = {
     "foot.privacy": "Política de privacidad", "foot.deletion": "Eliminar mi cuenta"
   },
   pt: {
+    "foot.by": "Uma aplicação DataCraft — ver todas as nossas aplicações",
     "meta.title": "Immo — Gestão profissional de arrendamentos, no telemóvel e no computador",
     "nav.features": "Funcionalidades", "nav.docs": "Documentos", "nav.how": "Começar", "nav.security": "Segurança", "nav.price": "Preço", "nav.contact": "Contacto",
     "cta.login": "Entrar", "cta.start": "Começar gratuitamente", "cta.web": "Abrir o Immo no computador", "cta.android": "Descarregar para Android",
@@ -281,6 +285,7 @@ window.IMMO_I18N = {
     "foot.privacy": "Política de privacidade", "foot.deletion": "Eliminar a minha conta"
   },
   ar: {
+    "foot.by": "تطبيق من DataCraft — اطّلع على جميع تطبيقاتنا",
     "meta.title": "Immo — إدارة احترافية للإيجارات على الهاتف والحاسوب",
     "nav.features": "المزايا", "nav.docs": "المستندات", "nav.how": "البدء", "nav.security": "الأمان", "nav.price": "السعر", "nav.contact": "اتصل بنا",
     "cta.login": "تسجيل الدخول", "cta.start": "ابدأ مجانًا", "cta.web": "افتح Immo على الحاسوب", "cta.android": "تنزيل لأندرويد",
