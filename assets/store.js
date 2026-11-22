@@ -1,5 +1,5 @@
-/* Boutique DataCraft : catalogue, langue (FR/EN) et commande par WhatsApp.
-   Les textes français sont ceux de index.html ; seuls les textes anglais sont ici. */
+/* Boutique DataCraft : catalogue, langues et commande par WhatsApp.
+   Textes français : index.html ; autres langues : store-i18n.js. */
 (function () {
   "use strict";
 
@@ -10,65 +10,9 @@
     whatsappDisplay: "+237 678 90 40 61"
   };
 
-  var EN = {
-    "nav.apps": "Apps", "nav.order": "Order", "nav.why": "Why DataCraft", "nav.faq": "FAQ", "nav.contact": "Contact",
-    "cta.order": "Order", "cta.browse": "Browse the apps", "cta.whatsapp": "Order on WhatsApp", "cta.start": "Start my order",
-    "hero.eyebrow": "Professional apps",
-    "hero.title": "Apps that <span class=\"grad\">work for you</span>.",
-    "hero.lead": "DataCraft builds apps for phone and computer: easy to pick up, in your language, usable even without a network. Pick yours, order on WhatsApp, pay with Mobile Money.",
-    "hero.p1": "Android and computer", "hero.p2": "Mobile Money accepted", "hero.p3": "Direct support",
-    "apps.eyebrow": "Our apps", "apps.title": "Pick the tool you need", "apps.lead": "Every app runs on phone and computer, with a single account.",
-    "how.eyebrow": "Order", "how.title": "Your app in 3 steps",
-    "s1.t": "Choose", "s1.d": "Select the app and tell us about your business. A demo is available before any purchase.",
-    "s2.t": "Order on WhatsApp", "s2.d": "Your request is sent in one tap, already written. We reply with pricing and terms.",
-    "s3.t": "Pay and get started", "s3.d": "Pay by Mobile Money or bank transfer. Your access is activated and we help you get set up.",
-    "why.eyebrow": "Why DataCraft", "why.title": "Built for the field, not just the office",
-    "why.lead": "Our apps are built with the people who use them every day: less typing, fewer oversights, more time for your business.",
-    "w1.t": "Phone and computer", "w1.d": "The same account everywhere; every action shows up instantly on the other device.",
-    "w2.t": "Even offline", "w2.d": "Keep working without a connection; everything syncs when the network is back.",
-    "w3.t": "Your language, your currency", "w3.d": "Several languages, with formats and currencies suited to your country.",
-    "w4.t": "Protected data", "w4.d": "Separated accounts and secure sign-in.",
-    "w5.t": "A real contact", "w5.d": "Questions, training, new features: you talk directly to the team that builds the app.",
-    "w6.t": "Custom work available", "w6.d": "Need a feature, or an app dedicated to your business? Let's talk.",
-    "faq.eyebrow": "FAQ", "faq.title": "Before you order",
-    "q1": "How do I pay?", "a1": "By Mobile Money (MTN MoMo, Orange Money…) or bank transfer. Payment details are sent to you on WhatsApp with your order.",
-    "q2": "How quickly is my access activated?", "a2": "As soon as payment is received, usually the same day. We then guide you through setup.",
-    "q3": "Can I try before buying?", "a3": "Yes: ask for a demo on WhatsApp. We show you the app on a case close to yours.",
-    "q4": "Will I get an invoice?", "a4": "Yes, an invoice is issued for every payment.",
-    "q5": "Which devices do the apps run on?", "a5": "Android phones and computers, in a recent browser (Chrome, Edge, Firefox, Safari).",
-    "q6": "Can you build an app for my business?", "a6": "Yes. Describe your needs on WhatsApp or by email; we'll propose a solution and a quote.",
-    "final.title": "A question, a demo, an order?", "final.lead": "Message us: we reply quickly, in French or English.",
-    "foot.tag": "Professional apps, simple and reliable.", "foot.apps": "Apps", "foot.contact": "Contact", "foot.rights": "All rights reserved.",
-    "foot.privacy": "Privacy (Immo)", "foot.deletion": "Account deletion (Immo)",
-    "o.title": "Order", "o.lead": "Fill in these few fields: your WhatsApp message will be ready to send.",
-    "o.app": "App", "o.want": "I would like", "o.buy": "To buy", "o.demo": "A demo", "o.info": "Information",
-    "o.name": "Name", "o.org": "Company (optional)", "o.city": "City and country", "o.msg": "Details (optional)",
-    "o.err": "Enter your name to continue.", "o.send": "Send on WhatsApp", "o.alt": "No WhatsApp?", "o.mail": "Send by email"
-  };
-
-  /* Textes générés (cartes, messages) dans les deux langues. */
-  var UI = {
-    fr: {
-      available: "Disponible", soon: "Bientôt", android: "Android", web: "Ordinateur",
-      priceOnRequest: "Tarif sur demande", discover: "Découvrir", openWeb: "Ouvrir sur ordinateur", download: "Android",
-      order: "Commander", demo: "Démonstration",
-      nextT: "Votre prochaine application", nextD: "D'autres applications sont en préparation. Vous avez un besoin précis ? Nous pouvons le développer pour vous.", nextCta: "Proposer un besoin",
-      custom: "Application sur mesure",
-      wa: { buy: "Bonjour DataCraft, je souhaite acheter {app}.", demo: "Bonjour DataCraft, je souhaite une démonstration de {app}.", info: "Bonjour DataCraft, je souhaite des informations sur {app}." },
-      name: "Nom", org: "Entreprise", city: "Ville / pays", msg: "Précisions", subject: "Commande {app}",
-      whatsapp: "WhatsApp", email: "E-mail", copy: "Copier", copied: "Copié"
-    },
-    en: {
-      available: "Available", soon: "Coming soon", android: "Android", web: "Computer",
-      priceOnRequest: "Price on request", discover: "Learn more", openWeb: "Open on computer", download: "Android",
-      order: "Order", demo: "Demo",
-      nextT: "Your next app", nextD: "More apps are on the way. Have a specific need? We can build it for you.", nextCta: "Suggest a need",
-      custom: "Custom app",
-      wa: { buy: "Hello DataCraft, I would like to buy {app}.", demo: "Hello DataCraft, I would like a demo of {app}.", info: "Hello DataCraft, I would like information about {app}." },
-      name: "Name", org: "Company", city: "City / country", msg: "Details", subject: "Order {app}",
-      whatsapp: "WhatsApp", email: "Email", copy: "Copy", copied: "Copied"
-    }
-  };
+  var LANGS = ["fr", "en", "es", "pt", "ar"];
+  var DICT = window.DC_I18N || {};
+  var UI = window.DC_UI || {};
 
   var APPS = window.DATACRAFT_APPS || [];
   var root = document.documentElement;
@@ -83,8 +27,8 @@
   };
   function $(id) { return document.getElementById(id); }
   function $all(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
-  function u(key) { return UI[lang][key]; }
-  function L(obj) { return obj ? (obj[lang] || obj.fr || "") : ""; }
+  function u(key) { return (UI[lang] && UI[lang][key]) || UI.fr[key]; }
+  function L(obj) { return obj ? (obj[lang] || (lang !== "fr" && obj.en) || obj.fr || "") : ""; }
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -348,12 +292,13 @@
   var FR_TITLE = document.title;
 
   function applyLang(next) {
-    lang = next === "en" ? "en" : "fr";
-    var dict = lang === "en" ? EN : FR;
+    lang = LANGS.indexOf(next) >= 0 ? next : "fr";
+    var dict = lang === "fr" ? FR : (DICT[lang] || {});
     root.lang = lang;
-    $all("[data-i18n]").forEach(function (e) { var v = dict[e.getAttribute("data-i18n")]; if (v) e.textContent = v; });
-    $all("[data-i18n-html]").forEach(function (e) { var v = dict[e.getAttribute("data-i18n-html")]; if (v) e.innerHTML = v; });
-    document.title = lang === "en" ? "DataCraft — Professional apps for phone and computer" : FR_TITLE;
+    root.dir = lang === "ar" ? "rtl" : "ltr";
+    $all("[data-i18n]").forEach(function (e) { var k = e.getAttribute("data-i18n"); var v = dict[k] || FR[k]; if (v) e.textContent = v; });
+    $all("[data-i18n-html]").forEach(function (e) { var k = e.getAttribute("data-i18n-html"); var v = dict[k] || FR[k]; if (v) e.innerHTML = v; });
+    document.title = lang === "fr" ? FR_TITLE : (dict["meta.title"] || FR_TITLE);
     $("lang").value = lang;
     renderApps();
     renderShelf();
@@ -365,7 +310,7 @@
   $("lang").addEventListener("change", function () { applyLang(this.value); });
   var saved = store.get("datacraft-lang") || store.get("immo-site-lang");
   var nav0 = (navigator.language || "fr").slice(0, 2);
-  applyLang(saved || (nav0 === "en" ? "en" : "fr"));
+  applyLang(saved || (LANGS.indexOf(nav0) >= 0 ? nav0 : "fr"));
 
   /* ---------- En-tête et menu ---------- */
   var header = $("top");

@@ -3,18 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>DataCraft — Applications professionnelles pour téléphone et ordinateur</title>
 <meta name="description" content="DataCraft conçoit et vend des applications professionnelles pour téléphone et ordinateur : Immo (gestion locative), Esty et bientôt d'autres. Commande sur WhatsApp, paiement Mobile Money.">
-<meta name="theme-color" content="#0d1321">
+<meta name="theme-color" content="#1c0f0a">
+<meta name="color-scheme" content="light dark">
 <meta property="og:title" content="DataCraft — Applications professionnelles">
 <meta property="og:description" content="Immo, Esty et bientôt d'autres. Commande sur WhatsApp, paiement Mobile Money.">
 <meta property="og:image" content="assets/img/app-home.webp">
 <link rel="icon" type="image/svg+xml" href="assets/datacraft.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Poppins:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="assets/store.css">
 </head>
 <body>
@@ -34,7 +33,7 @@
     <div class="tools">
       <label class="lang-wrap">
         <span class="sr">Langue / Language</span>
-        <select id="lang" class="lang"><option value="fr">FR</option><option value="en">EN</option></select>
+        <select id="lang" class="lang"><option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option><option value="ar">AR</option></select>
       </label>
       <button class="btn btn-sm btn-accent js-order hide-sm" type="button" data-i18n="cta.order">Commander</button>
       <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
@@ -74,7 +73,7 @@
         <p class="lead-dark" data-i18n="apps.lead">Chaque application fonctionne sur téléphone et sur ordinateur, avec un seul compte.</p>
       </div>
       <div class="apps" id="apps">
-        <noscript><p class="noscript">Activez JavaScript pour voir le catalogue, ou écrivez-nous : datacraft26@gmail.com</p></noscript>
+        <noscript><p class="noscript">Activez JavaScript pour voir le catalogue, ou écrivez-nous : datacraft26@gmail.com — <a href="immo/">Immo</a></p></noscript>
       </div>
     </div>
   </section>
@@ -160,7 +159,7 @@
   </div>
   <div class="wrap foot-bottom">
     <span>© <span id="year">2026</span> DataCraft. <span data-i18n="foot.rights">Tous droits réservés.</span></span>
-    <span><a href="confidentialite.html" data-i18n="foot.privacy">Confidentialité (Immo)</a> · <a href="suppression-compte.html" data-i18n="foot.deletion">Suppression de compte (Immo)</a></span>
+    <span class="foot-legal"><a href="mentions-legales.html" data-i18n="foot.legal">Mentions légales</a> · <a href="cgv.html" data-i18n="foot.terms">Conditions de vente</a> · <a href="politique-de-confidentialite.html" data-i18n="foot.privacy">Confidentialité</a> · <a href="cookies.html" data-i18n="foot.cookies">Cookies</a></span>
   </div>
 </footer>
 
@@ -189,12 +188,14 @@
     <label class="field"><span class="label" data-i18n="o.city">Ville et pays</span><input id="o-city" type="text" maxlength="80"></label>
     <label class="field"><span class="label" data-i18n="o.msg">Précisions (facultatif)</span><textarea id="o-msg" rows="3" maxlength="600"></textarea></label>
     <p class="order-err" id="o-err" hidden data-i18n="o.err">Indiquez votre nom pour continuer.</p>
+    <p class="order-note"><span data-i18n="o.privacy">Vos coordonnées servent uniquement à répondre à votre demande.</span> <a href="politique-de-confidentialite.html">ⓘ</a></p>
     <button class="btn btn-accent btn-lg btn-block" id="o-send" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="o.send">Envoyer sur WhatsApp</span></button>
     <p class="order-alt"><span data-i18n="o.alt">Pas de WhatsApp ?</span> <a id="o-mail" href="#" data-i18n="o.mail">Envoyer par e-mail</a></p>
   </div>
 </dialog>
 
 <script src="assets/catalog.js"></script>
+<script src="assets/store-i18n.js"></script>
 <script src="assets/store.js"></script>
 </body>
 </html>
