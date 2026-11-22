@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Resto — Logiciel de gestion de restaurant : salle, cuisine, caisse, carte en ligne | DataCraft</title>
+<meta name="description" content="Resto gère votre restaurant de la salle à la caisse : menus, commandes, écran cuisine, caisse et tickets, stock, réservations, fidélité et carte en ligne pour vos clients. Démonstration gratuite.">
+<meta name="theme-color" content="#1c0f0a">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Resto — La plateforme des restaurants">
+<meta property="og:description" content="Salle, cuisine, caisse, stock et carte en ligne : tout votre restaurant dans une seule application.">
+<meta property="og:url" content="https://datacraft.trade/resto/">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://datacraft.trade/resto/">
+<link rel="icon" type="image/svg+xml" href="../assets/datacraft.svg">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/store.css">
+<link rel="stylesheet" href="../assets/product.css">
+</head>
+<body data-base="../" data-app="resto">
+<header class="top" id="top">
+  <div class="wrap top-row">
+    <a class="brand" href="../" aria-label="DataCraft"><img src="../assets/datacraft.svg" alt="" width="36" height="36"><span>DataCraft</span></a>
+    <nav class="nav" id="nav" aria-label="Navigation">
+      <a href="../#applications" data-i18n="nav.apps">Applications</a>
+      <a href="#modules" data-i18n="pg.nav.modules">Fonctions</a>
+      <a href="#documents" data-i18n="pg.nav.clients">Vos clients</a>
+      <a href="../#tarifs" data-i18n="nav.pricing">Tarifs</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <label class="lang-wrap"><span class="sr">Langue / Language</span><select id="lang" class="lang"><option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option><option value="ar">AR</option></select></label>
+      <button class="btn btn-sm btn-accent js-order hide-sm" type="button" data-want="demo" data-i18n="cta.demoShort">Démonstration</button>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="p-hero" style="--pc:#5a1024">
+    <div class="hero-bg" aria-hidden="true"><span class="dots"></span></div>
+    <div class="wrap hero-row">
+      <div class="hero-copy">
+        <p class="crumbs"><a href="../" data-i18n="pg.home">Accueil</a> / Resto</p>
+        <div class="p-badge"><span class="app-logo" style="--c:#7a1730"><img src="../assets/apps/resto-192.png" alt="" width="64" height="64"></span><span><b>Resto</b><small data-i18n="pg.sector">Restauration</small></span></div>
+        <h1 data-i18n-html="pg.h1">Votre restaurant, de la salle à la caisse, <span class="grad">et jusque chez vos clients</span>.</h1>
+        <p class="lead" data-i18n="pg.lead">Prenez les commandes à table, envoyez-les en cuisine, encaissez et suivez votre stock. Vos clients consultent votre carte en ligne, commandent, réservent et donnent leur avis. Tout est relié, en temps réel.</p>
+        <div class="cta-row">
+          <button class="btn btn-accent btn-lg js-order" type="button" data-want="demo"><span data-i18n="cta.demo">Demander une démonstration</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+          <a class="btn btn-glass btn-lg" href="https://resto.datacraft.trade/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3zM8 20h8M12 16v4"/></svg><span data-i18n="pg.open">Ouvrir Resto</span></a>
+        </div>
+        <ul class="hero-points"><li data-i18n="pg.p1">Salle, cuisine et caisse</li><li data-i18n="pg.p2">Carte en ligne</li><li data-i18n="pg.p3">Notifications en direct</li></ul>
+      </div>
+      <div class="mock-wrap" aria-hidden="true">
+        <div class="mock" style="--mc:#7a1730">
+          <div class="mock-bar"><i></i><i></i><i></i><span>Resto</span></div>
+          <div class="mock-body">
+            <div class="mock-side"><b>Resto</b><span class="on" data-i18n="m.service">Service</span><span data-i18n="m.orders">Commandes</span><span data-i18n="m.kitchen">Cuisine</span><span data-i18n="m.pos">Caisse</span><span data-i18n="m.menus">Menus</span><span data-i18n="m.stock">Stock</span><span data-i18n="m.book">Réservations</span><span data-i18n="m.rep">Rapports</span></div>
+            <div class="mock-main">
+              <div class="mock-title" data-i18n="m.title">Service du soir</div>
+              <div class="mock-kpis">
+                <div class="mock-kpi"><small data-i18n="m.k1">Couverts</small><b>86</b></div>
+                <div class="mock-kpi up"><small data-i18n="m.k2">Chiffre du jour</small><b>642 500</b></div>
+                <div class="mock-kpi warn"><small data-i18n="m.k3">En cuisine</small><b data-i18n="m.k3v">5 commandes</b></div>
+              </div>
+              <div class="mock-chart"><i style="height:20%"></i><i style="height:28%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:90%"></i><i style="height:84%"></i><i style="height:60%"></i><i style="height:38%"></i></div>
+              <div class="mock-table">
+                <div class="mock-row"><span data-i18n="m.t1">Commande</span><span data-i18n="m.t2">Plats</span><span data-i18n="m.t3">État</span></div>
+                <div class="mock-row"><span data-i18n="m.r1">Table 4</span><span>3</span><span><i class="pill wait" data-i18n="m.s1">En cuisine</i></span></div>
+                <div class="mock-row"><span data-i18n="m.r2">À emporter n° 128</span><span>2</span><span><i class="pill ok" data-i18n="m.s2">Prête</i></span></div>
+                <div class="mock-row"><span data-i18n="m.r3">En ligne n° 129</span><span>4</span><span><i class="pill late" data-i18n="m.s3">Nouvelle</i></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-float"><b data-i18n="m.f1">Nouvelle commande en ligne</b><span data-i18n="m.f2">2 plats, livraison à 20 h — votre équipe est prévenue sur son téléphone.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="modules">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow" data-i18n="pg.mod.eyebrow">Fonctions</span>
+        <h2 data-i18n="pg.mod.title">Un logiciel de restaurant complet</h2>
+        <p class="lead-dark" data-i18n="pg.mod.lead">Pensé avec des restaurateurs : chaque écran suit le geste du métier, en mots simples, avec un seul bouton pour enregistrer.</p>
+      </div>
+      <div class="modules">
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M8 9h8M8 13h6"/></svg></span><h3 data-i18n="pg.m1.t">Menus et carte</h3><p data-i18n="pg.m1.d">Plats, catégories, photos, prix et disponibilité : modifiez votre carte en un instant, elle se met à jour partout.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span><h3 data-i18n="pg.m2.t">Service en salle</h3><p data-i18n="pg.m2.d">Plan des tables, état de chaque table, prise de commande sur téléphone ou tablette.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 0 0 4 0V3M9 11v10M17 3c-2 0-3 2-3 6s1 4 3 4v8"/></svg></span><h3 data-i18n="pg.m3.t">Cuisine</h3><p data-i18n="pg.m3.d">Les commandes arrivent en cuisine dès leur saisie ; la salle voit quand un plat est prêt.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M9 8h6M9 12h3"/></svg></span><h3 data-i18n="pg.m4.t">Caisse et tickets</h3><p data-i18n="pg.m4.d">Encaissement rapide, moyens de paiement réglables selon votre pays, tickets 80 ou 58 mm et factures.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span><h3 data-i18n="pg.m5.t">Stock et achats</h3><p data-i18n="pg.m5.d">Ingrédients et boissons, entrées et sorties, alertes de rupture, commandes aux fournisseurs.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span><h3 data-i18n="pg.m6.t">Réservations</h3><p data-i18n="pg.m6.d">Vos clients voient les tables disponibles et réservent ; vous confirmez en un appui.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg></span><h3 data-i18n="pg.m7.t">Fidélité</h3><p data-i18n="pg.m7.d">Carte de fidélité et avantages pour vos habitués, suivis automatiquement à chaque passage.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 0 1 16 0v3l2 3H2l2-3z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></span><h3 data-i18n="pg.m8.t">Offres et notifications</h3><p data-i18n="pg.m8.d">Publicités et offres mises en avant sur votre carte, et notifications envoyées à vos clients.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span><h3 data-i18n="pg.m9.t">Dépenses et rapports</h3><p data-i18n="pg.m9.d">Chiffre d'affaires, plats les plus vendus, dépenses et rapport de caisse, jour par jour.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13"/></svg></span><h3 data-i18n="pg.m10.t">Plusieurs établissements</h3><p data-i18n="pg.m10.d">Gérez plusieurs restaurants avec le même compte, chacun avec sa carte, son équipe et ses chiffres.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5A5 5 0 0 1 21 19"/></svg></span><h3 data-i18n="pg.m11.t">Équipe et contrôle</h3><p data-i18n="pg.m11.d">Serveurs, cuisine, caisse : chacun a son accès, et le journal garde la trace des opérations sensibles.</p></article>
+        <article class="module reveal"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><h3 data-i18n="pg.m12.t">Tous les pays</h3><p data-i18n="pg.m12.d">Devise, taxes et moyens de paiement réglables : Resto s'adapte à votre pays, sans option imposée.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow light" data-i18n="pg.flow.eyebrow">Pendant le service</span>
+        <h2 data-i18n="pg.flow.title">De la commande au ticket, sans papier</h2>
+      </div>
+      <ol class="flow" style="--n:5">
+        <li class="reveal"><b data-i18n="pg.f1.t">Commande</b><span data-i18n="pg.f1.d">À table, au comptoir ou en ligne depuis la carte de votre restaurant.</span></li>
+        <li class="reveal"><b data-i18n="pg.f2.t">Cuisine</b><span data-i18n="pg.f2.d">La commande s'affiche aussitôt en cuisine, plat par plat.</span></li>
+        <li class="reveal"><b data-i18n="pg.f3.t">Service</b><span data-i18n="pg.f3.d">La salle est prévenue quand c'est prêt ; le client est servi.</span></li>
+        <li class="reveal"><b data-i18n="pg.f4.t">Encaissement</b><span data-i18n="pg.f4.d">Ticket imprimé, paiement enregistré, stock mis à jour.</span></li>
+        <li class="reveal"><b data-i18n="pg.f5.t">Fidélité et avis</b><span data-i18n="pg.f5.d">Le client cumule ses avantages et peut laisser son avis.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="documents">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="pg.doc.eyebrow">Côté clients</span>
+        <h2 data-i18n="pg.doc.title">Votre carte en ligne, votre vitrine</h2>
+        <p class="lead-dark" data-i18n="pg.doc.lead">Vos clients découvrent vos plats en photos, les ajoutent à leurs favoris, commandent, réservent une table et partagent leur avis. Vous gagnez en visibilité sans dépendre d'une plateforme extérieure.</p>
+        <div class="audience"><span data-i18n="pg.a1">Restaurants</span><span data-i18n="pg.a2">Bars et lounges</span><span data-i18n="pg.a3">Restauration rapide</span><span data-i18n="pg.a4">Pâtisseries et boulangeries</span><span data-i18n="pg.a5">Hôtels-restaurants</span><span data-i18n="pg.a6">Traiteurs</span></div>
+      </div>
+      <div class="docs reveal">
+        <div class="doc"><span class="ic">QR</span><span><b data-i18n="pg.d1">Carte en ligne</b><small data-i18n="pg.d1s">Photos, prix, disponibilité</small></span></div>
+        <div class="doc"><span class="ic">♥</span><span><b data-i18n="pg.d2">Favoris, avis et commentaires</b><small data-i18n="pg.d2s">Vos plats les plus aimés</small></span></div>
+        <div class="doc"><span class="ic">80</span><span><b data-i18n="pg.d3">Ticket de caisse</b><small data-i18n="pg.d3s">80 ou 58 mm, textes à votre goût</small></span></div>
+        <div class="doc"><span class="ic">PDF</span><span><b data-i18n="pg.d4">Factures</b><small data-i18n="pg.d4s">À votre logo</small></span></div>
+        <div class="doc"><span class="ic">PDF</span><span><b data-i18n="pg.d5">Rapport de caisse</b><small data-i18n="pg.d5s">Fin de service</small></span></div>
+        <div class="doc"><span class="ic">🔔</span><span><b data-i18n="pg.d6">Notifications</b><small data-i18n="pg.d6s">Clients et équipe</small></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="contact">
+    <div class="wrap final-row">
+      <div>
+        <h2 data-i18n="pg.cta.title">Voyez Resto avec votre propre carte</h2>
+        <p class="lead" data-i18n="pg.cta.lead">Envoyez-nous votre menu : nous vous montrons Resto avec vos plats, de la commande au ticket, puis vous recevez une proposition claire.</p>
+        <div class="cta-row"><button class="btn btn-accent btn-lg js-order" type="button" data-want="demo"><span data-i18n="cta.demo">Demander une démonstration</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+      </div>
+      <div class="contact-card" id="contact-card"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <div class="foot-brand"><a class="brand" href="../"><img src="../assets/datacraft.svg" alt="" width="32" height="32"><span>DataCraft</span></a><p data-i18n="foot.tag">Des logiciels de gestion professionnels, simples et fiables, pour le commerce, le BTP, la restauration et l'immobilier.</p></div>
+    <div class="foot-col" id="foot-apps"><b data-i18n="foot.apps">Applications</b></div>
+    <div class="foot-col" id="foot-contact"><b data-i18n="foot.contact">Contact</b></div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© <span id="year">2026</span> DataCraft. <span data-i18n="foot.rights">Tous droits réservés.</span></span>
+    <span class="foot-legal"><a href="../mentions-legales.html" data-i18n="foot.legal">Mentions légales</a> · <a href="../cgv.html" data-i18n="foot.terms">Conditions de vente</a> · <a href="../politique-de-confidentialite.html" data-i18n="foot.privacy">Confidentialité</a> · <a href="../cookies.html" data-i18n="foot.cookies">Cookies</a></span>
+  </div>
+</footer>
+
+<dialog class="order" id="order" aria-labelledby="order-title">
+  <div class="order-box">
+    <button class="order-close" id="order-close" type="button" aria-label="Fermer / Close">×</button>
+    <h2 id="order-title" data-i18n="o.title">Nous contacter</h2>
+    <p class="order-lead" data-i18n="o.lead">Remplissez ces quelques champs : votre message WhatsApp sera prêt à envoyer.</p>
+    <div class="field"><span class="label" data-i18n="o.app">Application</span><div class="app-pick" id="o-apps" role="radiogroup"></div></div>
+    <div class="field"><span class="label" data-i18n="o.want">Je souhaite</span>
+      <div class="seg" role="radiogroup">
+        <label><input type="radio" name="o-want" value="demo" checked><span data-i18n="o.demo">Une démonstration</span></label>
+        <label><input type="radio" name="o-want" value="buy"><span data-i18n="o.buy">Un devis / acheter</span></label>
+        <label><input type="radio" name="o-want" value="info"><span data-i18n="o.info">Des informations</span></label>
+      </div>
+    </div>
+    <div class="grid2">
+      <label class="field"><span class="label" data-i18n="o.name">Nom</span><input id="o-name" type="text" autocomplete="name" maxlength="80"></label>
+      <label class="field"><span class="label" data-i18n="o.org">Entreprise (facultatif)</span><input id="o-org" type="text" autocomplete="organization" maxlength="80"></label>
+    </div>
+    <label class="field"><span class="label" data-i18n="o.city">Ville et pays</span><input id="o-city" type="text" maxlength="80"></label>
+    <label class="field"><span class="label" data-i18n="o.msg">Précisions (facultatif)</span><textarea id="o-msg" rows="3" maxlength="600"></textarea></label>
+    <p class="order-err" id="o-err" hidden data-i18n="o.err">Indiquez votre nom pour continuer.</p>
+    <p class="order-note"><span data-i18n="o.privacy">Vos coordonnées servent uniquement à répondre à votre demande.</span> <a href="../politique-de-confidentialite.html">ⓘ</a></p>
+    <button class="btn btn-accent btn-lg btn-block" id="o-send" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="o.send">Envoyer sur WhatsApp</span></button>
+    <p class="order-alt"><span data-i18n="o.alt">Pas de WhatsApp ?</span> <a id="o-mail" href="#" data-i18n="o.mail">Envoyer par e-mail</a></p>
+  </div>
+</dialog>
+
+<script src="../assets/catalog.js"></script>
+<script src="../assets/store-i18n.js"></script>
+<script src="../assets/pages-i18n.js"></script>
+<script src="../assets/store.js"></script>
+</body>
+</html>

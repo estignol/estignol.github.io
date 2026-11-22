@@ -13,8 +13,12 @@
   var LANGS = ["fr", "en", "es", "pt", "ar"];
   var DICT = window.DC_I18N || {};
   var UI = window.DC_UI || {};
+  var PAGE_DICT = window.DC_PAGE_I18N || {};   // textes propres aux pages des applications
 
   var APPS = window.DATACRAFT_APPS || [];
+  // Page placée dans un sous-dossier : <body data-base="../"> ; page d'une application : <body data-app="esty">.
+  var BASE = document.body.getAttribute("data-base") || "";
+  var PAGE_APP = document.body.getAttribute("data-app") || "";
   var root = document.documentElement;
   root.classList.remove("no-js");
   root.classList.add("js");
@@ -27,6 +31,7 @@
   };
   function $(id) { return document.getElementById(id); }
   function $all(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+  function rel(path) { return !path || /^(https?:|mailto:|#)/.test(path) ? path : BASE + path; }
   function u(key) { return (UI[lang] && UI[lang][key]) || UI.fr[key]; }
   function L(obj) { return obj ? (obj[lang] || (lang !== "fr" && obj.en) || obj.fr || "") : ""; }
   function el(tag, cls, text) {
@@ -56,7 +61,7 @@
     box.style.setProperty("--c", app.color || "#6d5cff");
     if (size) box.classList.add(size);
     if (app.icon) {
-      var img = el("img"); img.src = app.icon; img.alt = ""; img.width = 64; img.height = 64; box.appendChild(img);
+      var img = el("img"); img.src = rel(app.icon); img.alt = ""; img.width = 64; img.height = 64; box.appendChild(img);
     } else {
       box.classList.add("mono");
       box.textContent = app.name.charAt(0);
@@ -67,6 +72,7 @@
   /* ---------- Catalogue ---------- */
   function renderApps() {
     var wrap = $("apps");
+    if (!wrap) return;
     wrap.textContent = "";
     APPS.forEach(function (app) {
       var card = el("article", "app-card");
@@ -109,7 +115,7 @@
       buy.addEventListener("click", function () { openOrder(app.id, app.status === "soon" ? "info" : "buy"); });
       actions.appendChild(buy);
       if (app.page) {
-        var more = el("a", "btn btn-ghost", u("discover")); more.href = app.page; actions.appendChild(more);
+        var more = el("a", "btn btn-ghost", u("discover")); more.href = rel(app.page); actions.appendChild(more);
       } else {
         var demo = el("button", "btn btn-ghost", u("demo")); demo.type = "button";
         demo.addEventListener("click", function () { openOrder(app.id, "demo"); });
@@ -118,12 +124,13 @@
       card.appendChild(actions);
 
       var links = [];
-      if (app.web) links.push({ href: app.web, text: u("openWeb"), ic: ICONS.web });
+      if (app.web) links.push({ href: rel(app.web), text: u("openWeb"), ic: ICONS.web });
       if (app.android) links.push({ href: app.android, text: u("download"), ic: ICONS.android });
       if (links.length) {
         var sub = el("div", "app-links");
         links.forEach(function (l) {
           var a = el("a"); a.href = l.href; a.appendChild(icon(l.ic)); a.appendChild(document.createTextNode(l.text));
+          if (/^https?:/.test(l.href)) { a.target = "_blank"; a.rel = "noopener"; }
           sub.appendChild(a);
         });
         card.appendChild(sub);
@@ -149,10 +156,11 @@
   /* Vitrine animée de l'accueil : une tuile par application. */
   function renderShelf() {
     var shelf = $("shelf");
+    if (!shelf) return;
     shelf.textContent = "";
     var phone = el("div", "phone");
     var screen = el("div", "phone-screen");
-    var shot = el("img"); shot.src = "assets/img/app-home.webp"; shot.alt = ""; shot.width = 1179; shot.height = 3996;
+    var shot = el("img"); shot.src = rel("assets/img/app-home.webp"); shot.alt = ""; shot.width = 1179; shot.height = 3996;
     screen.appendChild(shot); phone.appendChild(screen);
     shelf.appendChild(phone);
     APPS.forEach(function (app, i) {
@@ -176,8 +184,8 @@
   }
   function renderContact() {
     var card = $("contact-card");
-    card.textContent = "";
-    contactLines().forEach(function (l) {
+    if (card) card.textContent = "";
+    if (card) contactLines().forEach(function (l) {
       var row = el("div", "c-line");
       row.appendChild(el("small", null, l.label));
       var val = el("div", "c-val");
@@ -194,25 +202,25 @@
     });
 
     var foot = $("foot-contact");
-    $all("a", foot).forEach(function (a) { a.remove(); });
-    contactLines().forEach(function (l) {
+    if (foot) $all("a", foot).forEach(function (a) { a.remove(); });
+    if (foot) contactLines().forEach(function (l) {
       var a = el("a", "ltr", l.text); a.href = l.href;
       if (l.href.indexOf("http") === 0) { a.target = "_blank"; a.rel = "noopener"; }
       foot.appendChild(a);
     });
 
     var fa = $("foot-apps");
-    $all("a", fa).forEach(function (a) { a.remove(); });
-    APPS.forEach(function (app) {
+    if (fa) $all("a", fa).forEach(function (a) { a.remove(); });
+    if (fa) APPS.forEach(function (app) {
       var a = el("a", null, app.name);
-      a.href = app.page || "#applications";
+      a.href = rel(app.page || "#applications");
       fa.appendChild(a);
     });
   }
 
   /* ---------- Formulaire de commande ---------- */
   var dlg = $("order");
-  var chosen = APPS.length ? APPS[0].id : "custom";
+  var chosen = PAGE_APP || (APPS.length ? APPS[0].id : "custom");
 
   function appName(id) {
     if (id === "custom") return u("custom");
@@ -284,7 +292,9 @@
   $("o-name").addEventListener("input", function () { $("o-err").hidden = true; });
   $("order-close").addEventListener("click", function () { dlg.close(); });
   dlg.addEventListener("click", function (ev) { if (ev.target === dlg) dlg.close(); });
-  $all(".js-order").forEach(function (b) { b.addEventListener("click", function () { openOrder(null, "buy"); }); });
+  $all(".js-order").forEach(function (b) {
+    b.addEventListener("click", function () { openOrder(b.getAttribute("data-app") || PAGE_APP || null, b.getAttribute("data-want") || "buy"); });
+  });
 
   /* ---------- Langue ---------- */
   $all("[data-i18n]").forEach(function (e) { FR[e.getAttribute("data-i18n")] = e.textContent; });
@@ -293,7 +303,13 @@
 
   function applyLang(next) {
     lang = LANGS.indexOf(next) >= 0 ? next : "fr";
-    var dict = lang === "fr" ? FR : (DICT[lang] || {});
+    var dict = FR;
+    if (lang !== "fr") {
+      dict = {};
+      var d1 = DICT[lang] || {}, d2 = PAGE_DICT[lang] || {}, k;
+      for (k in d1) dict[k] = d1[k];
+      for (k in d2) dict[k] = d2[k];
+    }
     root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
     $all("[data-i18n]").forEach(function (e) { var k = e.getAttribute("data-i18n"); var v = dict[k] || FR[k]; if (v) e.textContent = v; });
