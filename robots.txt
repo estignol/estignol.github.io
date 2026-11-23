@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /app/
-Disallow: /courrier.html
-Disallow: /reserver.html
-
-Sitemap: https://datacraft.trade/sitemap.xml

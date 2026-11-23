@@ -3,42 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>DataCraft — Applications professionnelles pour téléphone et ordinateur</title>
-<meta name="description" content="DataCraft conçoit et vend des applications professionnelles pour téléphone et ordinateur : Immo (gestion locative), Esty et bientôt d'autres. Commande sur WhatsApp, paiement Mobile Money.">
-<meta name="theme-color" content="#1c0f0a">
-<meta name="color-scheme" content="light dark">
-<meta property="og:title" content="DataCraft — Applications professionnelles">
-<meta property="og:description" content="Immo, Esty et bientôt d'autres. Commande sur WhatsApp, paiement Mobile Money.">
-<meta property="og:image" content="https://datacraft.trade/assets/img/app-home.webp">
-<meta property="og:url" content="https://datacraft.trade/">
-<meta property="og:type" content="website">
-<link rel="canonical" href="https://datacraft.trade/">
-<link rel="icon" type="image/svg+xml" href="assets/datacraft.svg">
-<link rel="stylesheet" href="assets/fonts/fonts.css">
-<link rel="stylesheet" href="assets/store.css">
+<title>Immo — La gestion locative professionnelle, sur téléphone et ordinateur</title>
+<meta name="description" content="Immo : encaissements Mobile Money, quittances vérifiables, rappels automatiques, suivi des impayés, rapprochement des relevés et rapports signés. Gratuit, en 5 langues, sur téléphone et ordinateur.">
+<meta name="theme-color" content="#062a21">
+<meta property="og:title" content="Immo — La gestion locative professionnelle">
+<meta property="og:description" content="Loyers, quittances, impayés, rappels et rapports signés. Gratuit, sur téléphone et ordinateur.">
+<meta property="og:image" content="assets/img/doc-quittance.webp">
+<link rel="icon" type="image/png" href="assets/immo-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Poppins:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&family=Tajawal:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="preload" as="image" href="assets/img/app-home.webp">
 </head>
 <body>
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
+
 <header class="top" id="top">
   <div class="wrap top-row">
-    <a class="brand" href="#hero" aria-label="DataCraft">
-      <img src="assets/datacraft.svg" alt="" width="36" height="36">
-      <span>DataCraft</span>
+    <a class="brand" href="#hero" aria-label="Immo">
+      <img src="assets/immo-192.png" alt="" width="38" height="38">
+      <span>Immo</span>
     </a>
     <nav class="nav" id="nav" aria-label="Navigation">
-      <a href="#applications" data-i18n="nav.apps">Applications</a>
-      <a href="#commander" data-i18n="nav.order">Commander</a>
-      <a href="#pourquoi" data-i18n="nav.why">Pourquoi DataCraft</a>
-      <a href="#faq" data-i18n="nav.faq">Questions</a>
+      <a href="#fonctionnalites" data-i18n="nav.features">Fonctionnalités</a>
+      <a href="#documents" data-i18n="nav.docs">Documents</a>
+      <a href="#demarrer" data-i18n="nav.how">Démarrer</a>
+      <a href="#securite" data-i18n="nav.security">Sécurité</a>
+      <a href="#tarif" data-i18n="nav.price">Tarif</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="app/" class="js-app nav-mobile-cta" data-i18n="cta.login">Se connecter</a>
     </nav>
     <div class="tools">
       <label class="lang-wrap">
         <span class="sr">Langue / Language</span>
-        <select id="lang" class="lang"><option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option><option value="ar">AR</option></select>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        <select id="lang" class="lang">
+          <option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option><option value="ar">AR</option>
+        </select>
       </label>
-      <button class="btn btn-sm btn-accent js-order hide-sm" type="button" data-i18n="cta.order">Commander</button>
+      <a class="btn btn-sm btn-light js-app hide-sm" href="app/" data-i18n="cta.login">Se connecter</a>
       <button class="menu-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
     </div>
   </div>
@@ -47,106 +53,287 @@
 <main>
   <!-- ============ ACCUEIL ============ -->
   <section class="hero" id="hero">
-    <div class="hero-bg" aria-hidden="true"><span class="glow g1"></span><span class="glow g2"></span><span class="dots"></span></div>
+    <div class="hero-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span><span class="grid"></span></div>
     <div class="wrap hero-row">
       <div class="hero-copy">
-        <span class="eyebrow light" data-i18n="hero.eyebrow">Applications professionnelles</span>
-        <h1 data-i18n-html="hero.title">Des applications qui <span class="grad">travaillent pour vous</span>.</h1>
-        <p class="lead" data-i18n="hero.lead">DataCraft conçoit des applications pour téléphone et ordinateur : simples à prendre en main, dans votre langue, utilisables même sans réseau. Choisissez la vôtre, commandez sur WhatsApp, payez par Mobile Money.</p>
-        <div class="cta-row">
-          <a class="btn btn-accent btn-lg" href="#applications"><span data-i18n="cta.browse">Voir les applications</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
-          <button class="btn btn-glass btn-lg js-order" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="cta.whatsapp">Commander sur WhatsApp</span></button>
+        <a class="badge js-app" href="app/" data-reveal><span class="dot"></span><span data-i18n="hero.badge">Nouveau : Immo fonctionne aussi sur ordinateur</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+        <h1 data-i18n-html="hero.title" data-reveal style="--d:80ms">Gérez vos loyers <span class="grad">comme une grande agence</span>.</h1>
+        <p class="lead" data-i18n="hero.lead" data-reveal style="--d:160ms">Encaissements Mobile Money, quittances vérifiables, rappels automatiques, rapprochement des relevés et rapports signés. Sur téléphone et sur ordinateur, dans votre langue et votre monnaie.</p>
+        <div class="cta-row" data-reveal style="--d:240ms">
+          <a class="btn btn-primary btn-lg js-app" href="app/"><span data-i18n="cta.start">Commencer gratuitement</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn btn-glass btn-lg js-demo" href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="cta.demo">Demander une démonstration</span></a>
         </div>
-        <ul class="hero-points">
-          <li data-i18n="hero.p1">Android et ordinateur</li>
-          <li data-i18n="hero.p2">Mobile Money accepté</li>
-          <li data-i18n="hero.p3">Support direct</li>
+        <p class="hero-note" data-i18n="hero.note" data-reveal style="--d:320ms">Gratuit · Sans carte bancaire · Prêt en 5 minutes</p>
+        <a class="android-link js-download" href="#contact" data-reveal style="--d:360ms">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10h10v7a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-7ZM8 10a4 4 0 0 1 8 0M9 5 8 3.5M15 5l1-1.5M4 11v4M20 11v4"/></svg>
+          <span data-i18n="cta.android">Télécharger pour Android</span>
+        </a>
+      </div>
+
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="stage-inner">
+          <div class="doc-float" data-depth="0.6"><img src="assets/img/doc-quittance.webp" alt="" width="1200" height="1697"></div>
+          <div class="phone" data-depth="1">
+            <div class="phone-notch"></div>
+            <div class="phone-screen"><img src="assets/img/app-home.webp" alt="" width="1179" height="3996"></div>
+          </div>
+          <div class="chip chip-paid" data-depth="1.6">
+            <span class="chip-ic ok"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span>
+            <span><b data-i18n="float.paid">Paiement reçu</b><small data-i18n="float.paidSub">Orange Money · Studio S1</small></span>
+            <strong class="mono">+75 000</strong>
+          </div>
+          <div class="chip chip-alert" data-depth="1.3">
+            <span class="chip-ic warn"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+            <span><b data-i18n="float.alert">3 loyers en retard</b><small data-i18n="float.alertSub">Relance WhatsApp en un appui</small></span>
+          </div>
+          <div class="chip chip-doc" data-depth="1.9">
+            <span class="chip-ic doc"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+            <span><b data-i18n="float.doc">Quittance envoyée</b><small data-i18n="float.docSub">Signée, avec QR code de vérification</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rails">
+      <p class="wrap rails-label" data-i18n="rails.label">Tous les moyens de paiement de vos locataires</p>
+      <div class="marquee">
+        <ul class="marquee-track">
+          <li>MTN MoMo</li><li>Orange Money</li><li>Wave</li><li>M-Pesa</li><li>Moov Money</li><li data-i18n="rails.cash">Espèces</li><li data-i18n="rails.bank">Virement bancaire</li><li data-i18n="rails.cheque">Chèque</li><li>Airtel Money</li><li>Free Money</li>
         </ul>
       </div>
-      <div class="shelf" aria-hidden="true" id="shelf"></div>
     </div>
   </section>
 
-  <!-- ============ APPLICATIONS ============ -->
-  <section class="section" id="applications">
+  <!-- ============ CHIFFRES ============ -->
+  <section class="stats">
+    <div class="wrap stats-row">
+      <div class="stat" data-reveal><b><span data-count="5">5</span></b><span data-i18n="stat.langs">langues, dont l'arabe</span></div>
+      <div class="stat" data-reveal style="--d:80ms"><b><span data-count="200">200</span>+</b><span data-i18n="stat.countries">pays et leurs monnaies</span></div>
+      <div class="stat" data-reveal style="--d:160ms"><b><span data-count="3">3</span></b><span data-i18n="stat.reminders">rappels automatiques par jour</span></div>
+      <div class="stat" data-reveal style="--d:240ms"><b><span data-count="0">0</span></b><span data-i18n="stat.fees">frais : Immo est gratuit</span></div>
+    </div>
+  </section>
+
+  <!-- ============ FONCTIONNALITÉS ============ -->
+  <section class="section" id="fonctionnalites">
     <div class="wrap">
-      <div class="head">
-        <span class="eyebrow" data-i18n="apps.eyebrow">Nos applications</span>
-        <h2 data-i18n="apps.title">Choisissez l'outil qu'il vous faut</h2>
-        <p class="lead-dark" data-i18n="apps.lead">Chaque application fonctionne sur téléphone et sur ordinateur, avec un seul compte.</p>
+      <div class="head" data-reveal>
+        <span class="eyebrow" data-i18n="features.eyebrow">Fonctionnalités</span>
+        <h2 data-i18n="features.title">Tout le cycle du loyer, dans une seule application</h2>
+        <p class="lead-dark" data-i18n="features.lead">Conçu avec des gestionnaires qui encaissent tous les jours : moins de saisie, moins d'oublis, plus de loyers encaissés.</p>
       </div>
-      <div class="apps" id="apps">
-        <noscript><p class="noscript">Activez JavaScript pour voir le catalogue, ou écrivez-nous : datacraft26@gmail.com — <a href="immo/">Immo</a></p></noscript>
+      <div class="bento">
+        <article class="card card-shot span-2 row-2" data-reveal>
+          <div class="card-text">
+            <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <h3 data-i18n="b1.t">Suivi des impayés en temps réel</h3>
+            <p data-i18n="b1.d">Qui doit quoi, depuis combien de temps, par logement. Relance, appel, encaissement ou échéancier en un appui.</p>
+          </div>
+          <div class="shot shot-arrears"><img src="assets/img/app-arrears.webp" alt="" loading="lazy" width="1179" height="3375"></div>
+        </article>
+        <article class="card" data-reveal style="--d:60ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>
+          <h3 data-i18n="b2.t">Quittance en 30 secondes</h3>
+          <p data-i18n="b2.d">Locataire, montant, moyen de paiement : la quittance PDF est prête, signée, avec son QR code.</p>
+        </article>
+        <article class="card card-dark" data-reveal style="--d:120ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+          <h3 data-i18n="b3.t">Rappels à 8 h, 13 h et 18 h</h3>
+          <p data-i18n="b3.d">Un résumé unique des retards et des échéances proches, trois fois par jour.</p>
+          <div class="times"><span>08:00</span><span>13:00</span><span>18:00</span></div>
+        </article>
+        <article class="card" data-reveal>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h7"/><path d="m15 17 2 2 4-4"/></svg></span>
+          <h3 data-i18n="b4.t">Rapprochement des relevés</h3>
+          <p data-i18n="b4.d">Importez un relevé MTN MoMo, Orange Money ou bancaire : chaque somme est reliée à son locataire.</p>
+        </article>
+        <article class="card card-shot span-2" data-reveal style="--d:60ms">
+          <div class="card-text">
+            <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7z"/><path d="M9 12h6"/></svg></span>
+            <h3 data-i18n="b5.t">Contrats, préavis, mises en demeure</h3>
+            <p data-i18n="b5.d">Documents juridiques adaptés au pays (OHADA, Code civil), délais calculés, suivi de la réception.</p>
+          </div>
+          <div class="shot shot-contracts"><img src="assets/img/app-contracts.webp" alt="" loading="lazy" width="1179" height="2739"></div>
+        </article>
+        <article class="card" data-reveal style="--d:120ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 11h5M19.5 8.5v5"/></svg></span>
+          <h3 data-i18n="b6.t">Équipe et propriétaires</h3>
+          <p data-i18n="b6.d">Administrateur, gestionnaire, comptable, agent : chacun ses droits.</p>
+        </article>
+        <article class="card" data-reveal>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg></span>
+          <h3 data-i18n="b7.t">Même sans réseau</h3>
+          <p data-i18n="b7.d">Les paiements s'enregistrent hors connexion et partent dès le retour du réseau.</p>
+        </article>
+        <article class="card" data-reveal style="--d:60ms">
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+          <h3 data-i18n="b8.t">5 langues, tous les pays</h3>
+          <p data-i18n="b8.d">Le pays choisi règle la monnaie, les formats et le cadre juridique.</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- ============ COMMANDER ============ -->
-  <section class="section section-alt" id="commander">
-    <div class="wrap">
-      <div class="head center">
-        <span class="eyebrow" data-i18n="how.eyebrow">Commander</span>
-        <h2 data-i18n="how.title">Votre application en 3 étapes</h2>
+  <!-- ============ DOCUMENTS ============ -->
+  <section class="section docs-section" id="documents">
+    <div class="wrap docs">
+      <div class="docs-copy">
+        <div class="head" data-reveal>
+          <span class="eyebrow" data-i18n="docs.eyebrow">Documents</span>
+          <h2 data-i18n="docs.title">Des documents professionnels, générés en un clic</h2>
+          <p class="lead-dark" data-i18n="docs.lead">Logo, signature et cachet de votre agence, QR code de vérification, mise en page soignée.</p>
+        </div>
+        <div class="doc-tabs" role="tablist" data-reveal>
+          <button role="tab" type="button" class="doc-tab" data-doc="0" aria-selected="true"><b data-i18n="d.quittance">Quittance</b><span data-i18n="dq.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="1" aria-selected="false"><b data-i18n="d.facture">Facture du reste</b><span data-i18n="df.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="2" aria-selected="false"><b data-i18n="d.historique">Historique locataire</b><span data-i18n="dh.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="3" aria-selected="false"><b data-i18n="d.dettes">Paiements et dettes</b><span data-i18n="dd.d"></span><i class="bar"></i></button>
+          <button role="tab" type="button" class="doc-tab" data-doc="4" aria-selected="false"><b data-i18n="d.impayes">État des impayés</b><span data-i18n="di.d"></span><i class="bar"></i></button>
+        </div>
+        <p class="docs-note" data-i18n="docs.note">Exemples réels générés par Immo. Coordonnées du locataire, signature, cachet et QR codes masqués.</p>
       </div>
-      <ol class="steps">
-        <li class="step"><span class="num">1</span><h3 data-i18n="s1.t">Choisissez</h3><p data-i18n="s1.d">Sélectionnez l'application et indiquez votre activité. Une démonstration est possible avant tout achat.</p></li>
-        <li class="step"><span class="num">2</span><h3 data-i18n="s2.t">Commandez sur WhatsApp</h3><p data-i18n="s2.d">Votre demande part en un appui, déjà rédigée. Nous vous répondons avec le tarif et les modalités.</p></li>
-        <li class="step"><span class="num">3</span><h3 data-i18n="s3.t">Payez et démarrez</h3><p data-i18n="s3.d">Paiement par Mobile Money ou virement. Votre accès est activé et nous vous accompagnons pour la mise en route.</p></li>
+      <div class="doc-stack" id="doc-stack" data-reveal>
+        <button class="doc-card" data-doc="0" type="button"><img src="assets/img/doc-quittance.webp" alt="Quittance de loyer générée par Immo" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card" data-doc="1" type="button"><img src="assets/img/doc-facture.webp" alt="Facture du reste à payer générée par Immo" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card" data-doc="2" type="button"><img src="assets/img/doc-historique.webp" alt="Historique des paiements d'un locataire" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card" data-doc="3" type="button"><img src="assets/img/doc-dettes.webp" alt="Rapport paiements et dettes de l'agence" loading="lazy" width="1200" height="1697"></button>
+        <button class="doc-card landscape" data-doc="4" type="button"><img src="assets/img/doc-impayes.webp" alt="État des impayés" loading="lazy" width="1600" height="1131"></button>
+        <span class="zoom-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg><span data-i18n="docs.open">Agrandir</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TÉLÉPHONE ET ORDINATEUR ============ -->
+  <section class="section devices-section">
+    <div class="wrap devices">
+      <div class="head" data-reveal>
+        <span class="eyebrow" data-i18n="dev.eyebrow">Téléphone et ordinateur</span>
+        <h2 data-i18n="dev.title">Un seul compte, partout</h2>
+        <p class="lead-dark" data-i18n="dev.lead">Encaissez sur le terrain avec le téléphone, analysez au bureau sur grand écran.</p>
+        <ul class="ticks">
+          <li data-i18n="dev1">Menu latéral et grands tableaux sur ordinateur</li>
+          <li data-i18n="dev2">Fonctionne hors connexion sur le téléphone</li>
+          <li data-i18n="dev3">Chaque action se retrouve aussitôt sur l'autre appareil</li>
+        </ul>
+        <a class="btn btn-primary js-app" href="app/"><span data-i18n="cta.web">Ouvrir Immo sur ordinateur</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+      </div>
+      <div class="device-scene" data-reveal aria-hidden="true">
+        <div class="browser">
+          <div class="browser-bar"><i></i><i></i><i></i><span class="url">immo · app</span></div>
+          <div class="browser-body">
+            <aside class="rail">
+              <b>Immo</b>
+              <span class="on"><svg viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3z"/></svg><em data-i18n="mock.home">Accueil</em></span>
+              <span><svg viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 9h8v12"/></svg><em data-i18n="mock.props">Logements</em></span>
+              <span><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/></svg><em data-i18n="mock.tenants">Locataires</em></span>
+              <span><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><em data-i18n="mock.rents">Loyers</em></span>
+              <span><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg><em data-i18n="mock.more">Plus</em></span>
+            </aside>
+            <div class="browser-content">
+              <img class="bc-home" src="assets/img/app-home.webp" alt="" loading="lazy">
+              <img class="bc-doc" src="assets/img/doc-dettes.webp" alt="" loading="lazy">
+            </div>
+          </div>
+        </div>
+        <div class="phone phone-sm">
+          <div class="phone-notch"></div>
+          <div class="phone-screen still"><img src="assets/img/app-arrears.webp" alt="" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DÉMARRER ============ -->
+  <section class="section" id="demarrer">
+    <div class="wrap">
+      <div class="head center" data-reveal>
+        <span class="eyebrow" data-i18n="how.eyebrow">Démarrer</span>
+        <h2 data-i18n="how.title">Opérationnel en 4 étapes</h2>
+      </div>
+      <ol class="steps" id="steps">
+        <li class="step" data-reveal><span class="num">1</span><h3 data-i18n="s1.t">Créez votre agence</h3><p data-i18n="s1.d">Choisissez le pays : monnaie, langue et fuseau horaire se règlent seuls.</p></li>
+        <li class="step" data-reveal style="--d:120ms"><span class="num">2</span><h3 data-i18n="s2.t">Ajoutez logements et locataires</h3><p data-i18n="s2.d">Unités, loyers, charges, contrats et pièces d'identité au même endroit.</p></li>
+        <li class="step" data-reveal style="--d:240ms"><span class="num">3</span><h3 data-i18n="s3.t">Encaissez</h3><p data-i18n="s3.d">La quittance part par WhatsApp ou e-mail, signée et cachetée.</p></li>
+        <li class="step" data-reveal style="--d:360ms"><span class="num">4</span><h3 data-i18n="s4.t">Laissez Immo relancer</h3><p data-i18n="s4.d">Les retards remontent seuls ; vous agissez en un appui.</p></li>
       </ol>
-      <div class="center-cta">
-        <button class="btn btn-accent btn-lg js-order" type="button"><span data-i18n="cta.start">Démarrer ma commande</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
-      </div>
     </div>
   </section>
 
-  <!-- ============ POURQUOI ============ -->
-  <section class="section dark" id="pourquoi">
-    <div class="wrap why-row">
-      <div class="head">
-        <span class="eyebrow light" data-i18n="why.eyebrow">Pourquoi DataCraft</span>
-        <h2 data-i18n="why.title">Pensé pour le terrain, pas seulement pour le bureau</h2>
-        <p class="lead" data-i18n="why.lead">Nos applications sont construites avec ceux qui s'en servent chaque jour : moins de saisie, moins d'oublis, plus de temps pour votre métier.</p>
+  <!-- ============ SÉCURITÉ ============ -->
+  <section class="section security" id="securite">
+    <div class="wrap sec-row">
+      <div class="head" data-reveal>
+        <span class="eyebrow light" data-i18n="sec.eyebrow">Sécurité</span>
+        <h2 data-i18n="sec.title">Vos loyers sont de l'argent. Immo les protège comme tel.</h2>
+        <p class="lead" data-i18n="sec.lead">Chaque règle est vérifiée par le serveur, pas seulement par l'application.</p>
+        <div class="shield" aria-hidden="true">
+          <svg viewBox="0 0 120 140"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7BC943"/><stop offset="1" stop-color="#17A06B"/></linearGradient></defs><path class="shield-path" d="M60 6 12 24v38c0 34 21 58 48 70 27-12 48-36 48-70V24z" fill="none" stroke="url(#sg)" stroke-width="5"/><path class="shield-check" d="m38 70 15 15 30-32" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
       </div>
-      <ul class="why-grid">
-        <li><span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="14" height="10" rx="1.5"/><path d="M6 18h6M9 14v4"/><rect x="17" y="8" width="5" height="11" rx="1.2"/></svg></span><b data-i18n="w1.t">Téléphone et ordinateur</b><span data-i18n="w1.d">Le même compte partout ; chaque action se retrouve aussitôt sur l'autre appareil.</span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg></span><b data-i18n="w2.t">Même sans réseau</b><span data-i18n="w2.d">Vous continuez à travailler hors connexion ; tout se synchronise au retour du réseau.</span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><b data-i18n="w3.t">Votre langue, votre monnaie</b><span data-i18n="w3.d">Plusieurs langues, formats et monnaies adaptés à votre pays.</span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg></span><b data-i18n="w4.t">Données protégées</b><span data-i18n="w4.d">Comptes cloisonnés et connexion sécurisée.</span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg></span><b data-i18n="w5.t">Un vrai interlocuteur</b><span data-i18n="w5.d">Questions, formation, évolutions : vous parlez directement à l'équipe qui développe.</span></li>
-        <li><span class="ic"><svg viewBox="0 0 24 24"><path d="m14.7 6.3 3 3M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/></svg></span><b data-i18n="w6.t">Sur mesure possible</b><span data-i18n="w6.d">Besoin d'une fonction ou d'une application dédiée à votre activité ? Parlons-en.</span></li>
+      <ul class="sec-grid">
+        <li data-reveal><b data-i18n="sec1.t">Agences cloisonnées</b><span data-i18n="sec1.d">Aucune agence ne peut voir les données d'une autre.</span></li>
+        <li data-reveal style="--d:60ms"><b data-i18n="sec2.t">Double authentification</b><span data-i18n="sec2.d">Code à 6 chiffres à la connexion.</span></li>
+        <li data-reveal style="--d:120ms"><b data-i18n="sec3.t">Paiements non effaçables</b><span data-i18n="sec3.d">Une erreur s'annule avec un motif, elle ne s'efface jamais.</span></li>
+        <li data-reveal style="--d:180ms"><b data-i18n="sec4.t">Journal d'activité</b><span data-i18n="sec4.d">Qui a encaissé, modifié ou annulé quoi, et quand.</span></li>
+        <li data-reveal style="--d:240ms"><b data-i18n="sec5.t">Protection anti-robot</b><span data-i18n="sec5.d">Inscription et connexion protégées.</span></li>
+        <li data-reveal style="--d:300ms"><b data-i18n="sec6.t">Verrouillage par code</b><span data-i18n="sec6.d">Code PIN ou empreinte digitale à l'ouverture.</span></li>
       </ul>
     </div>
   </section>
 
-  <!-- ============ FAQ ============ -->
-  <section class="section" id="faq">
-    <div class="wrap faq-row">
-      <div class="head">
-        <span class="eyebrow" data-i18n="faq.eyebrow">Questions fréquentes</span>
-        <h2 data-i18n="faq.title">Avant de commander</h2>
+  <!-- ============ TARIF ============ -->
+  <section class="section" id="tarif">
+    <div class="wrap price-row">
+      <div class="head" data-reveal>
+        <span class="eyebrow" data-i18n="price.eyebrow">Tarif</span>
+        <h2 data-i18n="price.title">Gratuit. Vraiment.</h2>
+        <p class="lead-dark" data-i18n="price.lead">Toutes les fonctionnalités, sans limite. Aucune carte bancaire demandée.</p>
       </div>
-      <div class="faq">
-        <details><summary data-i18n="q1">Comment payer ?</summary><div class="ans"><p data-i18n="a1">Par Mobile Money (MTN MoMo, Orange Money…) ou par virement. Les modalités vous sont envoyées sur WhatsApp avec votre commande.</p></div></details>
-        <details><summary data-i18n="q2">En combien de temps mon accès est-il activé ?</summary><div class="ans"><p data-i18n="a2">Dès la réception du paiement, généralement le jour même. Nous vous guidons ensuite pour la mise en route.</p></div></details>
-        <details><summary data-i18n="q3">Puis-je essayer avant d'acheter ?</summary><div class="ans"><p data-i18n="a3">Oui : demandez une démonstration sur WhatsApp. Nous vous montrons l'application sur un cas proche du vôtre.</p></div></details>
-        <details><summary data-i18n="q4">Recevrai-je une facture ?</summary><div class="ans"><p data-i18n="a4">Oui, une facture vous est remise pour chaque paiement.</p></div></details>
-        <details><summary data-i18n="q5">Sur quels appareils fonctionnent les applications ?</summary><div class="ans"><p data-i18n="a5">Sur les téléphones Android et sur ordinateur, dans un navigateur récent (Chrome, Edge, Firefox, Safari).</p></div></details>
-        <details><summary data-i18n="q6">Pouvez-vous développer une application pour mon activité ?</summary><div class="ans"><p data-i18n="a6">Oui. Décrivez-nous votre besoin sur WhatsApp ou par e-mail ; nous vous proposons une solution et un devis.</p></div></details>
+      <div class="price-card" data-reveal>
+        <div class="price-top"><span class="plan" data-i18n="price.plan">Immo</span><span class="amount" data-i18n="price.amount">Gratuit</span><span class="per" data-i18n="price.per">toutes fonctionnalités incluses</span></div>
+        <ul class="checks">
+          <li data-i18n="pc1">Quittances, factures et documents juridiques</li>
+          <li data-i18n="pc2">Rappels automatiques et suivi des impayés</li>
+          <li data-i18n="pc3">Rapprochement des relevés et rapports</li>
+          <li data-i18n="pc4">Équipe, propriétaires, plusieurs agences</li>
+          <li data-i18n="pc5">Téléphone, ordinateur et hors connexion</li>
+        </ul>
+        <a class="btn btn-primary btn-lg btn-block js-app" href="app/" data-i18n="cta.start">Commencer gratuitement</a>
       </div>
     </div>
   </section>
 
-  <!-- ============ CONTACT ============ -->
+  <!-- ============ FAQ ============ -->
+  <section class="section faq-section">
+    <div class="wrap faq-row">
+      <div class="head" data-reveal>
+        <span class="eyebrow" data-i18n="faq.eyebrow">Questions fréquentes</span>
+        <h2 data-i18n="faq.title">Avant de commencer</h2>
+      </div>
+      <div class="faq" data-reveal>
+        <details><summary data-i18n="q1">Sur quels appareils fonctionne Immo ?</summary><div class="ans"><p data-i18n="a1"></p></div></details>
+        <details><summary data-i18n="q2">Faut-il une connexion internet en permanence ?</summary><div class="ans"><p data-i18n="a2"></p></div></details>
+        <details><summary data-i18n="q3">Mes locataires doivent-ils installer Immo ?</summary><div class="ans"><p data-i18n="a3"></p></div></details>
+        <details><summary data-i18n="q4">Immo fonctionne-t-il hors du Cameroun ?</summary><div class="ans"><p data-i18n="a4"></p></div></details>
+        <details><summary data-i18n="q5">Mes données sont-elles en sécurité ?</summary><div class="ans"><p data-i18n="a5"></p></div></details>
+        <details><summary data-i18n="q6">Puis-je gérer plusieurs agences ?</summary><div class="ans"><p data-i18n="a6"></p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APPEL FINAL / CONTACT ============ -->
   <section class="final" id="contact">
+    <div class="final-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
     <div class="wrap final-row">
-      <div>
-        <h2 data-i18n="final.title">Une question, une démonstration, une commande ?</h2>
-        <p class="lead" data-i18n="final.lead">Écrivez-nous : nous répondons rapidement, en français ou en anglais.</p>
+      <div data-reveal>
+        <h2 data-i18n="final.title">Prêt à simplifier votre gestion locative ?</h2>
+        <p class="lead" data-i18n="final.lead">Créez votre agence en 5 minutes, ou demandez une démonstration guidée de 15 minutes.</p>
         <div class="cta-row">
-          <button class="btn btn-accent btn-lg js-order" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="cta.whatsapp">Commander sur WhatsApp</span></button>
+          <a class="btn btn-light btn-lg js-app" href="app/"><span data-i18n="cta.start">Commencer gratuitement</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a class="btn btn-glass btn-lg js-demo" href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="cta.whatsapp">Écrire sur WhatsApp</span></a>
         </div>
       </div>
-      <div class="contact-card" id="contact-card"></div>
+      <div class="contact-card" id="contact-card" data-reveal></div>
     </div>
   </section>
 </main>
@@ -154,51 +341,27 @@
 <footer class="foot">
   <div class="wrap foot-row">
     <div class="foot-brand">
-      <a class="brand" href="#hero"><img src="assets/datacraft.svg" alt="" width="32" height="32"><span>DataCraft</span></a>
-      <p data-i18n="foot.tag">Des applications professionnelles, simples et fiables.</p>
+      <a class="brand dark" href="#hero"><img src="assets/immo-192.png" alt="" width="34" height="34"><span>Immo</span></a>
+      <p data-i18n="foot.tag">Une gestion simple, une tranquillité assurée.</p>
     </div>
-    <div class="foot-col" id="foot-apps"><b data-i18n="foot.apps">Applications</b></div>
+    <div class="foot-col">
+      <b data-i18n="foot.product">Produit</b>
+      <a href="#fonctionnalites" data-i18n="nav.features">Fonctionnalités</a>
+      <a href="#documents" data-i18n="nav.docs">Documents</a>
+      <a href="#tarif" data-i18n="nav.price">Tarif</a>
+      <a href="app/" class="js-app" data-i18n="cta.login">Se connecter</a>
+    </div>
     <div class="foot-col" id="foot-contact"><b data-i18n="foot.contact">Contact</b></div>
   </div>
-  <div class="wrap foot-bottom">
-    <span>© <span id="year">2026</span> DataCraft. <span data-i18n="foot.rights">Tous droits réservés.</span></span>
-    <span class="foot-legal"><a href="mentions-legales.html" data-i18n="foot.legal">Mentions légales</a> · <a href="cgv.html" data-i18n="foot.terms">Conditions de vente</a> · <a href="politique-de-confidentialite.html" data-i18n="foot.privacy">Confidentialité</a> · <a href="cookies.html" data-i18n="foot.cookies">Cookies</a></span>
-  </div>
+  <div class="wrap foot-bottom"><span>© <span id="year">2026</span> Immo. <span data-i18n="foot.rights">Tous droits réservés.</span></span><span class="foot-legal"><a href="confidentialite.html" data-i18n="foot.privacy">Politique de confidentialité</a> · <a href="suppression-compte.html" data-i18n="foot.deletion">Supprimer mon compte</a></span></div>
 </footer>
 
-<!-- ============ FORMULAIRE DE COMMANDE ============ -->
-<dialog class="order" id="order" aria-labelledby="order-title">
-  <div class="order-box">
-    <button class="order-close" id="order-close" type="button" aria-label="Fermer / Close">×</button>
-    <h2 id="order-title" data-i18n="o.title">Commander</h2>
-    <p class="order-lead" data-i18n="o.lead">Remplissez ces quelques champs : votre message WhatsApp sera prêt à envoyer.</p>
-    <div class="field">
-      <span class="label" data-i18n="o.app">Application</span>
-      <div class="app-pick" id="o-apps" role="radiogroup"></div>
-    </div>
-    <div class="field">
-      <span class="label" data-i18n="o.want">Je souhaite</span>
-      <div class="seg" role="radiogroup">
-        <label><input type="radio" name="o-want" value="buy" checked><span data-i18n="o.buy">Acheter</span></label>
-        <label><input type="radio" name="o-want" value="demo"><span data-i18n="o.demo">Une démonstration</span></label>
-        <label><input type="radio" name="o-want" value="info"><span data-i18n="o.info">Des informations</span></label>
-      </div>
-    </div>
-    <div class="grid2">
-      <label class="field"><span class="label" data-i18n="o.name">Nom</span><input id="o-name" type="text" autocomplete="name" maxlength="80"></label>
-      <label class="field"><span class="label" data-i18n="o.org">Entreprise (facultatif)</span><input id="o-org" type="text" autocomplete="organization" maxlength="80"></label>
-    </div>
-    <label class="field"><span class="label" data-i18n="o.city">Ville et pays</span><input id="o-city" type="text" maxlength="80"></label>
-    <label class="field"><span class="label" data-i18n="o.msg">Précisions (facultatif)</span><textarea id="o-msg" rows="3" maxlength="600"></textarea></label>
-    <p class="order-err" id="o-err" hidden data-i18n="o.err">Indiquez votre nom pour continuer.</p>
-    <p class="order-note"><span data-i18n="o.privacy">Vos coordonnées servent uniquement à répondre à votre demande.</span> <a href="politique-de-confidentialite.html">ⓘ</a></p>
-    <button class="btn btn-accent btn-lg btn-block" id="o-send" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span data-i18n="o.send">Envoyer sur WhatsApp</span></button>
-    <p class="order-alt"><span data-i18n="o.alt">Pas de WhatsApp ?</span> <a id="o-mail" href="#" data-i18n="o.mail">Envoyer par e-mail</a></p>
-  </div>
+<dialog class="lightbox" id="lightbox">
+  <button class="lb-close" id="lb-close" type="button" aria-label="Fermer / Close">×</button>
+  <img id="lb-img" alt="">
 </dialog>
 
-<script src="assets/catalog.js"></script>
-<script src="assets/store-i18n.js"></script>
-<script src="assets/store.js"></script>
+<script src="assets/i18n.js"></script>
+<script src="assets/site.js"></script>
 </body>
 </html>
